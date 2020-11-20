@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:layout_constraintTop_toBottomOf="@+id/tipoTextPessoaLayout"
+    android:layout_marginTop="4dp"
+    android:visibility="gone"
+    android:id="@+id/dadosPessoaFisica"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!--
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:id="@+id/textLayoutFieldCpf"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:errorIconDrawable="@null"
+        android:hint="CPF"
+        >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/textInputCnpj"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+    -->
+    <!--
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:id="@+id/textLayoutFieldFRazaoSocial"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:hint="Razão Social"
+        app:errorIconDrawable="@null">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/textInputFRazaoSocial"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textCapWords"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+
+-->
+</androidx.constraintlayout.widget.ConstraintLayout>

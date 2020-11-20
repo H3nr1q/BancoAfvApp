@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragment.CadastroDadosClienteFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp">
+<!--
+
+        <include layout="@layout/dados_pessoa_juridica_layout"/>
+        <include layout="@layout/dados_pessoa_fisica_layout"/>
+-->
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:id="@+id/textLayoutFieldRazaoSocial"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:hint="Razão Social"
+            app:errorIconDrawable="@null">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/textInputRazaoSocial"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textCapWords"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:layout_constraintTop_toBottomOf="@id/textLayoutFieldRazaoSocial"
+            app:layout_constraintStart_toStartOf="parent"
+            android:id="@+id/textLayoutFieldNomeFantasia"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:hint="Nome Fantasia"
+            app:errorIconDrawable="@null">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/textInputNomeFantasia"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textCapWords"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>

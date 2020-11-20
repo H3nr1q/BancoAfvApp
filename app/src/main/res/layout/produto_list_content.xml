@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/produto_list_content"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?android:attr/selectableItemBackground"
+    android:padding="1dp">
+
+    <androidx.cardview.widget.CardView
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:focusable="true"
+        android:layout_margin="2dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="16dp">
+
+            <TextView
+                android:id="@+id/textViewCodigoProdutoContent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/textViewMaxValueProdutoContent"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Codigo"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/textViewDescricaoProdutoContent"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Descrição"
+                app:layout_constraintTop_toBottomOf="@id/textViewCodigoProdutoContent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/textViewMinValueProdutoContent"/>
+
+            <TextView
+                android:id="@+id/textViewEstoqueProdutoContent"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Estoque"
+                app:layout_constraintTop_toBottomOf="@id/textViewDescricaoProdutoContent"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <TextView
+                android:id="@+id/textViewMaxValueProdutoContent"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Valor Máximo"
+                android:textColor="#FF3700B3"
+                app:layout_constraintTop_toTopOf="@+id/textViewCodigoProdutoContent"
+                app:layout_constraintStart_toEndOf="@id/textViewCodigoProdutoContent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/textViewDescricaoProdutoContent"
+                android:gravity="end" />
+
+            <TextView
+                android:id="@+id/textViewMinValueProdutoContent"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Valor Mínimo"
+                android:textColor="#FF0000"
+                app:layout_constraintTop_toBottomOf="@id/textViewMaxValueProdutoContent"
+                app:layout_constraintStart_toEndOf="@id/textViewDescricaoProdutoContent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:gravity="end"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

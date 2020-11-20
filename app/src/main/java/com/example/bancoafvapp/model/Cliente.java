@@ -1,0 +1,154 @@
+package com.example.bancoafvapp.model;
+
+import android.os.Build;
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import androidx.annotation.RequiresApi;
+
+import java.util.List;
+import java.util.Objects;
+
+public class Cliente implements Parcelable {
+
+    private String codigoCliente;
+    private String cpfCnpj;
+    private String razaoSocial;
+    private String nomeFantasia;
+    private String telefone1;
+    private String telefone2;
+    private String emailPrincipal;
+    private String emailSecundario;
+    private List<Endereco> enderecos;
+
+    public Cliente() {
+    }
+
+    protected Cliente(Parcel in) {
+        codigoCliente = in.readString();
+        cpfCnpj = in.readString();
+        razaoSocial = in.readString();
+        nomeFantasia = in.readString();
+        telefone1 = in.readString();
+        telefone2 = in.readString();
+        emailPrincipal = in.readString();
+        emailSecundario = in.readString();
+    }
+
+    public static final Creator<Cliente> CREATOR = new Creator<Cliente>() {
+        @Override
+        public Cliente createFromParcel(Parcel in) {
+            return new Cliente(in);
+        }
+
+        @Override
+        public Cliente[] newArray(int size) {
+            return new Cliente[size];
+        }
+    };
+
+    public String getCodigoCliente() {
+        return codigoCliente;
+    }
+
+    public void setCodigoCliente(String codigoCliente) {
+        this.codigoCliente = codigoCliente;
+    }
+
+    public String getCpfCnpj() {
+        return cpfCnpj;
+    }
+
+    public void setCpfCnpj(String cpfCnpj) {
+        this.cpfCnpj = cpfCnpj;
+    }
+
+    public String getRazaoSocial() {
+        return razaoSocial;
+    }
+
+    public void setRazaoSocial(String razaoSocial) {
+        this.razaoSocial = razaoSocial;
+    }
+
+    public String getNomeFantasia() {
+        return nomeFantasia;
+    }
+
+    public void setNomeFantasia(String nomeFantasia) {
+        this.nomeFantasia = nomeFantasia;
+    }
+
+    public String getTelefone1() {
+        return telefone1;
+    }
+
+    public void setTelefone1(String telefone1) {
+        this.telefone1 = telefone1;
+    }
+
+    public String getTelefone2() {
+        return telefone2;
+    }
+
+    public void setTelefone2(String getTelefone2) {
+        this.telefone2 = getTelefone2;
+    }
+
+    public String getEmailPrincipal() {
+        return emailPrincipal;
+    }
+
+    public void setEmailPrincipal(String emailPrincipal) {
+        this.emailPrincipal = emailPrincipal;
+    }
+
+    public String getEmailSecundario() {
+        return emailSecundario;
+    }
+
+    public void setEmailSecundario(String emailSecundario) {
+        this.emailSecundario = emailSecundario;
+    }
+
+    public List<Endereco> getEnderecos() {
+        return enderecos;
+    }
+
+    public void setEnderecos(List<Endereco> enderecos) {
+        this.enderecos = enderecos;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(codigoCliente);
+        dest.writeString(cpfCnpj);
+        dest.writeString(razaoSocial);
+        dest.writeString(nomeFantasia);
+        dest.writeString(telefone1);
+        dest.writeString(telefone2);
+        dest.writeString(emailPrincipal);
+        dest.writeString(emailSecundario);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Cliente cliente = (Cliente) o;
+        return codigoCliente.equals(cliente.codigoCliente);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    @Override
+    public int hashCode() {
+        return Objects.hash(codigoCliente);
+    }
+
+
+}

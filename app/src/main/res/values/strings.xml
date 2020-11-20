@@ -1,0 +1,46 @@
+<resources>
+    <string name="app_name">BancoAfvApp</string>
+
+    <string name="open_drawer">Abrir</string>
+    <string name="close_drawer">Fechar</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+    <string-array name="tipo_pessoa">
+
+        <item>Pessoa Física</item>
+        <item>Pessoa Jurídica</item>
+    </string-array>
+
+
+    <string-array name="estados_brasil">
+        <item>AC</item>
+        <item>AL</item>
+        <item>AP</item>
+        <item>AM</item>
+        <item>BA</item>
+        <item>CE</item>
+        <item>DF</item>
+        <item>ES</item>
+        <item>GO</item>
+        <item>MA</item>
+        <item>MT</item>
+        <item>MS</item>
+        <item>MG</item>
+        <item>PA</item>
+        <item>PB</item>
+        <item>PR</item>
+        <item>PE</item>
+        <item>PI</item>
+        <item>RJ</item>
+        <item>RN</item>
+        <item>RS</item>
+        <item>RO</item>
+        <item>RR</item>
+        <item>SC</item>
+        <item>SP</item>
+        <item>SE</item>
+        <item>TO</item>
+    </string-array>
+</resources>
