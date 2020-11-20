@@ -12,6 +12,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +23,8 @@ import android.widget.Toast;
 
 import com.example.bancoafvapp.R;
 import com.example.bancoafvapp.activity.CadastroClienteActivity;
+import com.example.bancoafvapp.utils.MaskEditUtil;
+import com.example.bancoafvapp.utils.StringUtils;
 import com.example.validators.CNPJValidator;
 import com.example.validators.CPFValidator;
 import com.google.android.material.textfield.TextInputLayout;
@@ -28,39 +32,15 @@ import com.google.android.material.textfield.TextInputLayout;
 
 public class NovoClienteDialogFragment extends DialogFragment implements View.OnClickListener {
 
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    private String mParam1;
-    private String mParam2;
-
     private RadioButton radioButtonJuridica, radioButtonFisica;
 
-    private CPFValidator cpfValidator;
-    private CNPJValidator cnpjValidator;
-    private TextInputLayout cpf, cnpj;
+    private TextWatcher cpfCnpjTextWatcher;
+
+    private TextInputLayout cpfCnpj;
 
     View mView;
 
     public NovoClienteDialogFragment() {}
-
-    public static NovoClienteDialogFragment newInstance(String param1, String param2) {
-        NovoClienteDialogFragment fragment = new NovoClienteDialogFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
 
     @NonNull
     @Override
@@ -71,18 +51,24 @@ public class NovoClienteDialogFragment extends DialogFragment implements View.On
 
         radioButtonFisica = mView.findViewById(R.id.radioButtonFisica);
         radioButtonJuridica = mView.findViewById(R.id.radioButtonJuridica);
-        cnpj = mView.findViewById(R.id.textLayoutFieldCnpjEmp);
-        cpf = mView.findViewById(R.id.textLayoutFieldCpfEmp);
+        cpfCnpj = mView.findViewById(R.id.textLayoutFieldCpfCnpj);
+        //cpf = mView.findViewById(R.id.textLayoutFieldCpfEmp);
+
 
         radioButtonJuridica.setOnClickListener(this);
 
         radioButtonFisica.setOnClickListener(this);
 
+        if (radioButtonJuridica.isChecked()){
+            radioButtonJuridica.setChecked(true);
+            radioButtonFisica.setChecked(false);
+            if (!StringUtils.isNullOrEmpty(cpfCnpj.getEditText().getText().toString()))
+                cpfCnpj.getEditText().getText().clear();
+            cpfCnpj.setHint("CNPJ");
+            cpfCnpjTextWatcher = MaskEditUtil.mask(cpfCnpj.getEditText(), MaskEditUtil.FORMAT_CNPJ);
+        }
 
-        //cnpjValidator = new CNPJValidator(cnpj);
-        //cnpj = cnpjValidator.validateAfterTextChanged();
-        //cpfValidator = new CPFValidator(cpf);
-        //cpf = cpfValidator.validateAfterTextChanged();
+        cpfCnpj.getEditText().addTextChangedListener(cpfCnpjTextWatcher);
 
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -93,28 +79,55 @@ public class NovoClienteDialogFragment extends DialogFragment implements View.On
             public void onClick(DialogInterface dialog, int which) {
 
             }
-        }).setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
+        });
+        builder.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
                 Intent intent = new Intent(getActivity(), CadastroClienteActivity.class);
 
                 if (radioButtonJuridica.isChecked()){
-
                     intent.putExtra("tipoPessoa", "juridica");
-                    intent.putExtra("cpfcnpj", cnpj.getEditText().getText().toString());
+                    intent.putExtra("cpfcnpj", cpfCnpj.getEditText().getText().toString());
                 }else if(radioButtonFisica.isChecked()){
                     intent.putExtra("tipoPessoa", "fisica");
-                    intent.putExtra("cpfcnpj", cpf.getEditText().getText().toString());
+                    intent.putExtra("cpfcnpj", cpfCnpj.getEditText().getText().toString());
                 }
 
                 startActivityForResult(intent, CadastroClienteActivity.REQUEST_CODE);
             }
         });
 
+        AlertDialog alertDialog = builder.create();
+
+        alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialog) {
+                alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(false);
+                cpfCnpj.getEditText().addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                    }
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                    }
+                    @Override
+                    public void afterTextChanged(Editable s) {
+
+                        if (!StringUtils.isNullOrEmpty(s.toString())){
+                            alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(true);
+                        }else {
+                            alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(false);
+                        }
+                    }
+                });
+            }
+        });
 
 
-        return builder.create();
+        return alertDialog;
     }
 
     @Override
@@ -125,16 +138,20 @@ public class NovoClienteDialogFragment extends DialogFragment implements View.On
 
                 radioButtonJuridica.setChecked(true);
                 radioButtonFisica.setChecked(false);
-                cnpj.setVisibility(View.VISIBLE);
-                cpf.setVisibility(View.GONE);
+                if (!StringUtils.isNullOrEmpty(cpfCnpj.getEditText().getText().toString()))
+                cpfCnpj.getEditText().getText().clear();
+                cpfCnpj.setHint("CNPJ");
+                cpfCnpjTextWatcher = MaskEditUtil.mask(cpfCnpj.getEditText(), MaskEditUtil.FORMAT_CNPJ);
                 break;
 
             case R.id.radioButtonFisica:
 
                 radioButtonFisica.setChecked(true);
                 radioButtonJuridica.setChecked(false);
-                cpf.setVisibility(View.VISIBLE);
-                cnpj.setVisibility(View.GONE);
+                if (!StringUtils.isNullOrEmpty(cpfCnpj.getEditText().getText().toString()))
+                    cpfCnpj.getEditText().getText().clear();
+                cpfCnpj.setHint("CPF");
+                cpfCnpjTextWatcher = MaskEditUtil.mask(cpfCnpj.getEditText(), MaskEditUtil.FORMAT_CPF);
                 break;
         }
     }

@@ -20,6 +20,7 @@
             android:id="@+id/radioButtonJuridica"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:checked="true"
             android:text="Jurídica"
 
             />
@@ -34,16 +35,16 @@
             android:text="Física"/>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textLayoutFieldCnpjEmp"
+            android:id="@+id/textLayoutFieldCpfCnpj"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:hint="CNPJ"
+            android:hint="CNPJ/CNPJ"
             app:errorIconDrawable="@null"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/radioButtonJuridica"
-            android:visibility="gone">
+            >
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/textInputCnpjEmp"
@@ -51,7 +52,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="number"/>
         </com.google.android.material.textfield.TextInputLayout>
-
+        <!--
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textLayoutFieldCpfEmp"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -71,7 +72,7 @@
                 android:inputType="number"/>
         </com.google.android.material.textfield.TextInputLayout>
 
-        
+        -->
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

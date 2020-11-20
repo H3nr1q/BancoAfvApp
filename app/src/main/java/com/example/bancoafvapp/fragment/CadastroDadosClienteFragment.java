@@ -106,8 +106,8 @@ public class CadastroDadosClienteFragment extends CadastroClienteFragment {
         if (getCliente().getNomeFantasia() != null){
             Objects.requireNonNull(nomeFantasia.getEditText()).setText(getCliente().getNomeFantasia());
         }
-        //razaoSocial.getEditText().setText(getCliente().getRazaoSocial());
-        //nomeFantasia.getEditText().setText(getCliente().getNomeFantasia());
+        razaoSocial.getEditText().setText(getCliente().getRazaoSocial());
+        nomeFantasia.getEditText().setText(getCliente().getNomeFantasia());
 
 
         if (getActivity() != null){
@@ -148,19 +148,18 @@ public class CadastroDadosClienteFragment extends CadastroClienteFragment {
             }else if(razaoSocial.getError()!=null){
                 razaoSocial.setError(null);
             }
-            //getCliente().setRazaoSocial(razaoSocial.getEditText().getText().toString());
+            getCliente().setRazaoSocial(razaoSocial.getEditText().getText().toString());
         }
 
-        if(nomeFantasia!=null){
+        if(nomeFantasia!=null && nomeFantasia.getVisibility() == View.VISIBLE){
             if(StringUtils.isNullOrEmpty(Objects.requireNonNull(nomeFantasia.getEditText()).getText().toString())){
                 nomeFantasia.setError("Campo obrigatório");
                 isValid = false;
             }else if (nomeFantasia.getError()!=null){
                 nomeFantasia.setError(null);
             }
-            //getCliente().setNomeFantasia(nomeFantasia.getEditText().getText().toString());
+            getCliente().setNomeFantasia(nomeFantasia.getEditText().getText().toString());
         }
-
         return isValid;
     }
 
