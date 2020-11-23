@@ -10,8 +10,12 @@ import android.view.ViewGroup;
 
 import com.example.bancoafvapp.R;
 import com.example.bancoafvapp.model.Cliente;
+import com.example.bancoafvapp.utils.StringUtils;
+import com.example.bancoafvapp.utils.Validate;
 import com.example.validators.EmailValidator;
 import com.google.android.material.textfield.TextInputLayout;
+
+import java.util.Objects;
 
 public class CadastroEmailFragment extends CadastroClienteFragment{
 
@@ -22,8 +26,7 @@ public class CadastroEmailFragment extends CadastroClienteFragment{
     private String mParam2;
 
     private TextInputLayout emailPrincipal, emailSecundario;
-    private EmailValidator emailValidator1, emailValidator2;
-    private ICadastroCliente listener;
+
 
     public CadastroEmailFragment() { }
 
@@ -53,11 +56,12 @@ public class CadastroEmailFragment extends CadastroClienteFragment{
         emailPrincipal = view.findViewById(R.id.textLayoutFieldEmailPrincipal);
         emailSecundario = view.findViewById(R.id.textLayoutFieldEmaileSecundario);
 
-        emailValidator1 = new EmailValidator(emailPrincipal);
-        emailValidator2 = new EmailValidator(emailSecundario);
-
-        emailPrincipal = emailValidator1.validateAfterTextChanged();
-        emailSecundario = emailValidator2.validateAfterTextChanged();
+        if (getCliente().getEmailPrincipal() != null){
+            Objects.requireNonNull(emailPrincipal.getEditText()).setText(getCliente().getEmailPrincipal());
+        }
+        if (getCliente().getEmailSecundario() != null){
+            Objects.requireNonNull(emailSecundario.getEditText()).setText(getCliente().getEmailSecundario());
+        }
 
         return view;
     }
@@ -65,31 +69,36 @@ public class CadastroEmailFragment extends CadastroClienteFragment{
     @Override
     public boolean isValid() {
 
-        if (emailValidator1 != null || emailValidator2 != null){
-            if (emailValidator1.validate()){
-                return emailValidator2.validate();
+        boolean isValid = true;
+
+        if (emailPrincipal!= null ){
+
+            if (StringUtils.isNullOrEmpty(emailPrincipal.getEditText().getText().toString())){
+                emailPrincipal.setError("Campo obrigatório");
+                isValid = false;
+            }else if (!emailPrincipal.getEditText().getText().toString().matches(Validate.EMAIL_REGEX)){
+                isValid = false;
+                emailPrincipal.setError("Digite um email válido");
+            }else if (emailPrincipal.getError()!=null){
+                emailPrincipal.setError(null);
             }
+            getCliente().setEmailPrincipal(emailPrincipal.getEditText().getText().toString());
         }
-        return true;
+
+        if (emailSecundario!= null){
+
+            if (StringUtils.isNullOrEmpty(emailSecundario.getEditText().getText().toString())){
+                emailSecundario.setError("Campo obrigatório");
+                isValid = false;
+            }else if (!emailSecundario.getEditText().getText().toString().matches(Validate.EMAIL_REGEX)){
+                isValid = false;
+                emailSecundario.setError("Digite um email válido");
+            }else if (emailSecundario.getError()!=null){
+                emailSecundario.setError(null);
+            }
+            getCliente().setEmailSecundario(emailSecundario.getEditText().getText().toString());
+        }
+        return isValid;
     }
 
-    @Override
-    public Cliente getCliente() {
-        return null;
-    }
-    /*
-    @Override
-    public boolean isValid() {
-        return false;
-    }
-
-    @Override
-    public Cliente clienteData() {
-        Cliente cliente = new Cliente();
-        cliente.setEmailPrincipal(emailPrincipal.getEditText().getText().toString());
-        cliente.setEmailSecundario(emailSecundario.getEditText().getText().toString());
-        return cliente;
-    }
-    *
-     */
 }

@@ -25,12 +25,15 @@
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
         android:id="@+id/clientesPager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        >
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/client_tab_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            app:tabMode="scrollable"
+            />
 
     </androidx.viewpager.widget.ViewPager>
 
@@ -43,12 +46,12 @@
     </FrameLayout>
     -->
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
+<!--    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fButtonSaveClientes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:src="@drawable/ic_check"
         android:theme="@style/FloatingAcionBottomTheme"
-        android:layout_gravity="bottom|end"/>
+        android:layout_gravity="bottom|end"/>-->
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

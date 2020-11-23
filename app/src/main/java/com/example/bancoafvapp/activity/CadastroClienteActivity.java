@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
@@ -44,7 +45,7 @@ public class CadastroClienteActivity extends AppCompatActivity implements ICadas
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        floatingActionButton = findViewById(R.id.fButtonSaveClientes);
+        //floatingActionButton = findViewById(R.id.fButtonSaveClientes);
 
         clientesPagerAdapter = new ClientesPagerAdapter(getSupportFragmentManager());
         viewPager = findViewById(R.id.clientesPager);
@@ -60,6 +61,7 @@ public class CadastroClienteActivity extends AppCompatActivity implements ICadas
 
             @Override
             public void onPageSelected(int position) {
+
                 isCurrentClienteValido(position);
                 //isClienteValido();
                 Toast.makeText(CadastroClienteActivity.this, String.valueOf(position), Toast.LENGTH_SHORT).show();
@@ -71,23 +73,39 @@ public class CadastroClienteActivity extends AppCompatActivity implements ICadas
             }
         });
 
-
+/*
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                Toast.makeText(CadastroClienteActivity.this, cliente.getRazaoSocial() + " " + cliente.getNomeFantasia(), Toast.LENGTH_LONG).show();
-
+                Toast.makeText(CadastroClienteActivity.this, cliente.getEmailPrincipal() + " " + cliente.getEmailSecundario(), Toast.LENGTH_LONG).show();
             }
-        });
+        });*/
 
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        getMenuInflater().inflate(R.menu.opcoes_menu, menu);
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == android.R.id.home ){
-            finish();
+
+        switch (item.getItemId()){
+
+            case R.id.optionSalvar:
+                Toast.makeText(CadastroClienteActivity.this, cliente.getEmailPrincipal() + " " + cliente.getEmailSecundario(), Toast.LENGTH_LONG).show();
+                break;
+
+            case android.R.id.home:
+                finish();
+                break;
         }
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -96,7 +114,7 @@ public class CadastroClienteActivity extends AppCompatActivity implements ICadas
         super.onBackPressed();
         finish();
     }
-
+/*
     public boolean isCurrentClienteValido(int position){
         if(position>0) {
             Fragment fragment = getPage(position - 1);
@@ -105,6 +123,30 @@ public class CadastroClienteActivity extends AppCompatActivity implements ICadas
                     viewPager.setCurrentItem(position - 1);
                     return false;
                 }
+            }
+        }
+        return true;
+    }*/
+
+    public boolean isCurrentClienteValido(int position){
+        if (position > 0) {
+            for (int i = 0; i < position; i++) {
+
+                Fragment fragment = getPage(i);
+                if (fragment instanceof CadastroClienteFragment) {
+                    if (!((CadastroClienteFragment) fragment).isValid()) {
+                        viewPager.setCurrentItem(i);
+                        return false;
+                    }
+                }
+            }
+        }else {
+            Fragment fragment = getPage(viewPager.getCurrentItem());
+            if (fragment instanceof  CadastroClienteFragment){
+                if (!((CadastroClienteFragment) fragment).isValid()){
+                    viewPager.setCurrentItem(viewPager.getCurrentItem());
+                }
+                return false;
             }
         }
         return true;

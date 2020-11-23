@@ -89,14 +89,18 @@ public class CadastroTelefoneFragment extends CadastroClienteFragment{
         telefonePrincipal.getEditText().addTextChangedListener(telefone1Mask);
         telefoneSecundario.getEditText().addTextChangedListener(telefone2Mask);
 
+        if (getCliente().getRazaoSocial() != null){
+            Objects.requireNonNull(telefonePrincipal.getEditText()).setText(getCliente().getRazaoSocial());
+        }
+        if (getCliente().getNomeFantasia() != null){
+            Objects.requireNonNull(telefoneSecundario.getEditText()).setText(getCliente().getNomeFantasia());
+        }
 
         //phoneNumberValidator = new PhoneNumberValidator(telefonePrincipal);
         //phoneNumberValidator2 = new PhoneNumberValidator(telefoneSecundario);
 
-        Objects.requireNonNull(telefonePrincipal.getEditText()).addTextChangedListener(new PhoneNumberFormattingTextWatcher());
-        Objects.requireNonNull(telefoneSecundario.getEditText()).addTextChangedListener(new PhoneNumberFormattingTextWatcher());
-
-        getCliente().setTelefone1("131231321");
+        //Objects.requireNonNull(telefonePrincipal.getEditText()).addTextChangedListener(new PhoneNumberFormattingTextWatcher());
+        //Objects.requireNonNull(telefoneSecundario.getEditText()).addTextChangedListener(new PhoneNumberFormattingTextWatcher());
 
         return view;
     }
@@ -121,24 +125,24 @@ public class CadastroTelefoneFragment extends CadastroClienteFragment{
 
         boolean isValid = true;
 
-        if(telefonePrincipal.getEditText()!=null){
+        if(telefonePrincipal!=null){
             if(StringUtils.isNullOrEmpty(telefonePrincipal.getEditText().getText().toString())){
                 telefonePrincipal.setError("Campo obrigatório");
                 isValid = false;
             }else if(telefonePrincipal.getError()!=null){
                 telefonePrincipal.setError(null);
             }
-            getCliente().setRazaoSocial(telefonePrincipal.getEditText().getText().toString());
+            getCliente().setTelefone1(telefonePrincipal.getEditText().getText().toString());
         }
 
-        if(telefoneSecundario.getEditText()!=null){
+        if(telefoneSecundario!=null){
             if(StringUtils.isNullOrEmpty(telefoneSecundario.getEditText().getText().toString())){
                 telefoneSecundario.setError("Campo obrigatório");
                 isValid = false;
             }else if(telefoneSecundario.getError()!=null){
                 telefoneSecundario.setError(null);
             }
-            getCliente().setRazaoSocial(telefoneSecundario.getEditText().getText().toString());
+            getCliente().setTelefone2(telefoneSecundario.getEditText().getText().toString());
         }
 
         return isValid;

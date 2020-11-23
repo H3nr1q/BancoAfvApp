@@ -8,132 +8,24 @@
     android:id="@+id/cadastroEnderecoFrameLayout">
 
     <!-- TODO: Update blank fragment layout -->
-<!--
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="16dp">
+        android:layout_height="match_parent">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textLayoutFieldEndereco"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:hint="Endereço"
-            app:errorIconDrawable="@null"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_height="match_parent"
+            android:id="@+id/recyclerViewCadastroEndereco"
+            tools:listitem="@layout/endereco_content"/>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/textInputEndereco"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textLayoutFieldNumero"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:hint="Número"
-            app:errorIconDrawable="@null"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textLayoutFieldEndereco">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/textInputNumero"
-                android:inputType="number"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:maxLength="5"/>
-        </com.google.android.material.textfield.TextInputLayout>
-
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textLayoutFieldComplemento"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:hint="Complemento"
-            app:errorIconDrawable="@null"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textLayoutFieldNumero">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/textInputComplemento"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textLayoutFieldBairro"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:hint="Bairro"
-            app:errorIconDrawable="@null"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textLayoutFieldComplemento">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/textInputBairro"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textLayoutFieldEstado"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:hint="Estado"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textLayoutFieldBairro">
-
-            <AutoCompleteTextView
-                android:id="@+id/textInputEstado"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="none" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textLayoutFieldCidade"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:hint="Cidade"
-            app:errorIconDrawable="@null"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textLayoutFieldEstado">
-
-            <AutoCompleteTextView
-                android:id="@+id/textInputCidade"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textCapCharacters|textAutoComplete"
-                android:textAllCaps="true"
-                />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        &lt;!&ndash;
-        <Button
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textLayoutFieldCidade"
-            android:id="@+id/testTAG"
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fbAddMoreAddress"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="TESTE"/>
-            &ndash;&gt;
+            android:layout_height="match_parent"
+            android:layout_gravity="end|bottom"
+            android:src="@android:drawable/ic_input_add"
+            android:theme="@style/FloatingAcionBottomTheme"
+            android:layout_margin="16dp"/>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-
-    </androidx.constraintlayout.widget.ConstraintLayout>-->
-
-    <include layout="@layout/endereco_content"/>
 </FrameLayout>

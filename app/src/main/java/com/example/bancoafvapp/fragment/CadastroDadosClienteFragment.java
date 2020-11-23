@@ -41,15 +41,7 @@ public class CadastroDadosClienteFragment extends CadastroClienteFragment {
     private String sRazaoSocial;
     private String sNomeFantasia;
 
-    private AutoCompleteTextView autoCompleteTextView;
-    private Spinner spinner;
-    //private ConstraintLayout conPessoaFisica;
-    //private ConstraintLayout conPessoaJuridica;
-
     private TextInputLayout razaoSocial, nomeFantasia;
-
-    private CPFValidator cpfValidator;
-    private CNPJValidator cnpjValidator;
 
     private String mParam1;
     private String mParam2;
@@ -75,15 +67,23 @@ public class CadastroDadosClienteFragment extends CadastroClienteFragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
-        if (savePessoa != null && !savePessoa.isEmpty()){
-            savedInstanceState.getString("savePessoa", savePessoa);
-            autoCompleteTextView.setText(savePessoa);
-        }
+        if (savedInstanceState != null){
 
+            if (StringUtils.isNullOrEmpty(savePessoa)){
+                savedInstanceState.getString("savePessoa", savePessoa);
+            }
+
+/*            if (StringUtils.isNullOrEmpty(sRazaoSocial)){
+                savedInstanceState.getString("sRazaoSocial", sRazaoSocial);
+                razaoSocial.getEditText().setText(sRazaoSocial);
+            }
+            if (StringUtils.isNullOrEmpty(sNomeFantasia)){
+                savedInstanceState.getString("sNomeFantasia", sNomeFantasia);
+                nomeFantasia.getEditText().setText(sNomeFantasia);
+            }*/
+        }
         //savedInstanceState.getString("razaoSocial", sRazaoSocial);
         //savedInstanceState.getString("nomeFantasia", sNomeFantasia);
-
-
     }
 
     @Override
@@ -141,7 +141,7 @@ public class CadastroDadosClienteFragment extends CadastroClienteFragment {
 
         boolean isValid = true;
 
-        if(razaoSocial.getEditText()!=null){
+        if(razaoSocial!=null){
             if(StringUtils.isNullOrEmpty(razaoSocial.getEditText().getText().toString())){
                 razaoSocial.setError("Campo obrigatório");
                 isValid = false;
@@ -149,6 +149,7 @@ public class CadastroDadosClienteFragment extends CadastroClienteFragment {
                 razaoSocial.setError(null);
             }
             getCliente().setRazaoSocial(razaoSocial.getEditText().getText().toString());
+            sRazaoSocial = razaoSocial.getEditText().getText().toString();
         }
 
         if(nomeFantasia!=null && nomeFantasia.getVisibility() == View.VISIBLE){
@@ -159,6 +160,7 @@ public class CadastroDadosClienteFragment extends CadastroClienteFragment {
                 nomeFantasia.setError(null);
             }
             getCliente().setNomeFantasia(nomeFantasia.getEditText().getText().toString());
+            sNomeFantasia = nomeFantasia.getEditText().getText().toString();
         }
         return isValid;
     }
