@@ -17,6 +17,8 @@ import android.widget.Toast;
 
 import com.example.bancoafvapp.R;
 import com.example.bancoafvapp.model.Cliente;
+import com.example.bancoafvapp.utils.MaskEditUtil;
+import com.example.bancoafvapp.utils.StringUtils;
 import com.example.validators.CpfCnpjMaks;
 import com.example.validators.PhoneNumberValidator;
 import com.google.android.material.textfield.TextInputLayout;
@@ -36,6 +38,8 @@ public class CadastroTelefoneFragment extends CadastroClienteFragment{
 
     private String savedTelefonePrincipal;
     private String savedTelefoneSecundario;
+
+    private TextWatcher telefone1Mask, telefone2Mask;
 
 
     private PhoneNumberValidator phoneNumberValidator, phoneNumberValidator2;
@@ -79,8 +83,15 @@ public class CadastroTelefoneFragment extends CadastroClienteFragment{
         telefonePrincipal = view.findViewById(R.id.textLayoutFieldTelefonePrincipal);
         telefoneSecundario = view.findViewById(R.id.textLayoutFieldTelefoneSecundario);
 
-        phoneNumberValidator = new PhoneNumberValidator(telefonePrincipal);
-        phoneNumberValidator2 = new PhoneNumberValidator(telefoneSecundario);
+        telefone1Mask = MaskEditUtil.mask(telefonePrincipal.getEditText(), MaskEditUtil.FORMAT_FONE);
+        telefone2Mask = MaskEditUtil.mask(telefoneSecundario.getEditText(), MaskEditUtil.FORMAT_FONE);
+
+        telefonePrincipal.getEditText().addTextChangedListener(telefone1Mask);
+        telefoneSecundario.getEditText().addTextChangedListener(telefone2Mask);
+
+
+        //phoneNumberValidator = new PhoneNumberValidator(telefonePrincipal);
+        //phoneNumberValidator2 = new PhoneNumberValidator(telefoneSecundario);
 
         Objects.requireNonNull(telefonePrincipal.getEditText()).addTextChangedListener(new PhoneNumberFormattingTextWatcher());
         Objects.requireNonNull(telefoneSecundario.getEditText()).addTextChangedListener(new PhoneNumberFormattingTextWatcher());
@@ -107,6 +118,29 @@ public class CadastroTelefoneFragment extends CadastroClienteFragment{
 
     @Override
     public boolean isValid() {
-        return false;
+
+        boolean isValid = true;
+
+        if(telefonePrincipal.getEditText()!=null){
+            if(StringUtils.isNullOrEmpty(telefonePrincipal.getEditText().getText().toString())){
+                telefonePrincipal.setError("Campo obrigatório");
+                isValid = false;
+            }else if(telefonePrincipal.getError()!=null){
+                telefonePrincipal.setError(null);
+            }
+            getCliente().setRazaoSocial(telefonePrincipal.getEditText().getText().toString());
+        }
+
+        if(telefoneSecundario.getEditText()!=null){
+            if(StringUtils.isNullOrEmpty(telefoneSecundario.getEditText().getText().toString())){
+                telefoneSecundario.setError("Campo obrigatório");
+                isValid = false;
+            }else if(telefoneSecundario.getError()!=null){
+                telefoneSecundario.setError(null);
+            }
+            getCliente().setRazaoSocial(telefoneSecundario.getEditText().getText().toString());
+        }
+
+        return isValid;
     }
 }

@@ -61,6 +61,7 @@ public class CadastroClienteActivity extends AppCompatActivity implements ICadas
             @Override
             public void onPageSelected(int position) {
                 isCurrentClienteValido(position);
+                //isClienteValido();
                 Toast.makeText(CadastroClienteActivity.this, String.valueOf(position), Toast.LENGTH_SHORT).show();
             }
 
@@ -69,6 +70,7 @@ public class CadastroClienteActivity extends AppCompatActivity implements ICadas
 
             }
         });
+
 
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override

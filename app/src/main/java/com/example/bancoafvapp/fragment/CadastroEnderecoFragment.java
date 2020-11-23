@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import android.text.Editable;
@@ -11,13 +12,16 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewStub;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.example.bancoafvapp.R;
+import com.example.bancoafvapp.app.BancoAfvApp;
 import com.example.bancoafvapp.model.Cliente;
 import com.example.bancoafvapp.model.Endereco;
 import com.example.bancoafvapp.model.Municipio;
@@ -48,6 +52,7 @@ public class CadastroEnderecoFragment extends CadastroClienteFragment implements
                             bairro, estado, cidade;
     private List<Endereco> enderecos = new ArrayList<>();
 
+
     public CadastroEnderecoFragment() {}
 
     public static CadastroEnderecoFragment newInstance(String param1, String param2) {
@@ -75,6 +80,10 @@ public class CadastroEnderecoFragment extends CadastroClienteFragment implements
 
         presenter = new CadastroEnderecoPresenter(this);
         View view = inflater.inflate(R.layout.fragment_cadastro_endereco, container, false);
+
+
+
+
         //buttonTag = view.findViewById(R.id.testTAG);
         estadosAutoComplete = view.findViewById(R.id.textInputEstado);
         adapterEstados = ArrayAdapter.createFromResource(getActivity(),
@@ -90,6 +99,7 @@ public class CadastroEnderecoFragment extends CadastroClienteFragment implements
         bairro = view.findViewById(R.id.textLayoutFieldBairro);
         estado = view.findViewById(R.id.textLayoutFieldEstado);
         cidade = view.findViewById(R.id.textLayoutFieldCidade);
+
 
 
         estadosAutoComplete.addTextChangedListener(new TextWatcher() {
@@ -118,7 +128,6 @@ public class CadastroEnderecoFragment extends CadastroClienteFragment implements
                 cidadesAutoComplete.setTag(municipios.get(position));
             }
         });
-
         return view;
     }
 
@@ -134,11 +143,11 @@ public class CadastroEnderecoFragment extends CadastroClienteFragment implements
         cidadesAutoComplete.setAdapter(adapterCidades);
     }
 
-
     @Override
     public boolean isValid() {
         return false;
     }
+
 
     /*
     @Override

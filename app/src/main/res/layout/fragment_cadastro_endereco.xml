@@ -4,10 +4,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".fragment.CadastroEnderecoFragment">
+    tools:context=".fragment.CadastroEnderecoFragment"
+    android:id="@+id/cadastroEnderecoFrameLayout">
 
     <!-- TODO: Update blank fragment layout -->
-
+<!--
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -121,7 +122,7 @@
                 />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!--
+        &lt;!&ndash;
         <Button
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/textLayoutFieldCidade"
@@ -129,8 +130,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="TESTE"/>
-            -->
+            &ndash;&gt;
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>-->
+
+    <include layout="@layout/endereco_content"/>
 </FrameLayout>
