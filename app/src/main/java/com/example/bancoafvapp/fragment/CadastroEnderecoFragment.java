@@ -1,6 +1,8 @@
 package com.example.bancoafvapp.fragment;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -36,7 +38,8 @@ import com.google.android.material.textfield.TextInputLayout;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CadastroEnderecoFragment extends CadastroClienteFragment implements View.OnClickListener {
+public class CadastroEnderecoFragment extends CadastroClienteFragment implements View.OnClickListener, NovoEnderecoDialogFragment.OnAddAdress,
+        EnderecosAdapter.OnRemoveAddressItem {
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -51,6 +54,8 @@ public class CadastroEnderecoFragment extends CadastroClienteFragment implements
     private EnderecosAdapter enderecosAdapter;
 
     private FloatingActionButton floatingActionButton;
+
+    private OnActionEnderecoListener onActionEnderecoListener;
 
     public CadastroEnderecoFragment() {}
 
@@ -83,12 +88,29 @@ public class CadastroEnderecoFragment extends CadastroClienteFragment implements
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
-        EnderecosAdapter enderecosAdapter = new EnderecosAdapter();
+        if (getCliente().getEnderecos()!=null && !getCliente().getEnderecos().isEmpty()){
+            enderecos = getCliente().getEnderecos();
+            enderecosAdapter = new EnderecosAdapter(enderecos);
+            //enderecosAdapter.setEnderecos(enderecos);
+        }else {
+            getCliente().setEnderecos(enderecos);
+            enderecosAdapter = new EnderecosAdapter(enderecos);
+        }
         recyclerView.setAdapter(enderecosAdapter);
+        floatingActionButton.setOnClickListener(this);
+        enderecosAdapter.setOnRemoveAddressItem(this);
 
         return view;
     }
 
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+
+        if (context instanceof OnActionEnderecoListener){
+            this.onActionEnderecoListener = (OnActionEnderecoListener) context;
+        }
+    }
 
     @Override
     public void onClick(View v) {
@@ -96,12 +118,52 @@ public class CadastroEnderecoFragment extends CadastroClienteFragment implements
         switch (v.getId()){
 
             case R.id.fbAddMoreAddress:
-
-
+                    NovoEnderecoDialogFragment dialogFragment = new NovoEnderecoDialogFragment(this);
+                    dialogFragment.show(getActivity().getSupportFragmentManager(), "novoEnderecoDialog");
+                    break;
         }
     }
     @Override
     public boolean isValid() {
         return false;
+    }
+
+    @Override
+    public void addAddress(Endereco endereco) {
+        enderecos.add(endereco);
+        getCliente().setEnderecos(enderecos);
+        enderecosAdapter.setEnderecos(enderecos);
+    }
+
+    @Override
+    public void onRemoveAddressItem(int position) {
+
+        if (position > 0){
+
+            dialogResponse(position);
+        }else{
+
+            Toast.makeText(getActivity(), "É necessário pelo menos um endereço", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void dialogResponse(int position){
+
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
+        alertDialog.setTitle("Excluir endereço");
+        alertDialog.setMessage("Você realmente quer remover este endereço?");
+        alertDialog.setNegativeButton("Não", null);
+        alertDialog.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                enderecos.remove(position);
+                enderecosAdapter.setEnderecos(enderecos);
+                getCliente().setEnderecos(enderecos);
+            }
+        });
+
+        alertDialog.create();
+        alertDialog.show();
     }
 }

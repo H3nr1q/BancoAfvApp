@@ -18,11 +18,80 @@
         android:layout_margin="2dp"
         android:padding="2dp">
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="16dp">
 
+            <TextView
+                android:id="@+id/enderecoTitleItem"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Endereço "
+                android:textStyle="bold"
+                />
 
+            <TextView
+                android:id="@+id/textViewEnderecoItem"
+                app:layout_constraintTop_toBottomOf="@id/enderecoTitleItem"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Endereco "
+                />
+
+            <TextView
+                app:layout_constraintTop_toBottomOf="@id/enderecoTitleItem"
+                app:layout_constraintStart_toEndOf="@id/textViewEnderecoItem"
+                android:id="@+id/textViewNumeroItem"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=",n° "/>
+            <TextView
+                android:id="@+id/textViewComplementoItem"
+                app:layout_constraintStart_toEndOf="@id/textViewNumeroItem"
+                app:layout_constraintTop_toBottomOf="@id/enderecoTitleItem"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=",complemento"/>
+            <TextView
+                app:layout_constraintTop_toBottomOf="@id/textViewEnderecoItem"
+                app:layout_constraintStart_toStartOf="parent"
+                android:id="@+id/textViewBairroItem"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Bairro "/>
+            <TextView
+                app:layout_constraintTop_toBottomOf="@+id/textViewBairroItem"
+                app:layout_constraintStart_toStartOf="parent"
+                android:id="@+id/textViewCidadeItem"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cidade "
+                />
+            <TextView
+                app:layout_constraintStart_toEndOf="@id/textViewCidadeItem"
+                app:layout_constraintTop_toBottomOf="@id/textViewBairroItem"
+                android:id="@+id/textViewEstadoItem"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=", Estado"/>
+
+            <ImageView
+                android:id="@+id/removeAddressItemButton"
+                app:layout_constraintTop_toBottomOf="@id/enderecoTitleItem"
+                app:layout_constraintBottom_toTopOf="@id/textViewEstadoItem"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:padding="8dp"
+                android:src="@drawable/ic_delete"
+                android:background="@drawable/rounded_shape_ripple"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

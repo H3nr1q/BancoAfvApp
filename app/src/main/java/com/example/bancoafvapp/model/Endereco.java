@@ -18,6 +18,7 @@ public class Endereco implements Parcelable {
     private String bairro;
     private String estado;
     private String codMunicipio;
+    private String nomeMunicipio;
 
     public Endereco() {
     }
@@ -35,6 +36,7 @@ public class Endereco implements Parcelable {
         bairro = in.readString();
         estado = in.readString();
         codMunicipio = in.readString();
+        nomeMunicipio = in.readString();
     }
 
     public static final Creator<Endereco> CREATOR = new Creator<Endereco>() {
@@ -113,6 +115,14 @@ public class Endereco implements Parcelable {
         this.estado = estado;
     }
 
+    public String getNomeMunicipio() {
+        return nomeMunicipio;
+    }
+
+    public void setNomeMunicipio(String nomeMunicipio) {
+        this.nomeMunicipio = nomeMunicipio;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -133,6 +143,7 @@ public class Endereco implements Parcelable {
         dest.writeString(bairro);
         dest.writeString(estado);
         dest.writeString(codMunicipio);
+        dest.writeString(nomeMunicipio);
     }
 
     @Override

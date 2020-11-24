@@ -8,18 +8,17 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
 
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 
 import com.example.bancoafvapp.R;
+import com.example.bancoafvapp.model.Endereco;
 import com.example.bancoafvapp.model.Municipio;
 import com.example.bancoafvapp.utils.StringUtils;
 import com.google.android.material.textfield.TextInputLayout;
@@ -27,7 +26,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NovoEnderecoDialogFragment extends DialogFragment implements CadastroEnderecoPresenter.View {
+public class NovoEnderecoDialogFragment extends DialogFragment implements CadastroEnderecoPresenter.View{
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -44,28 +43,35 @@ public class NovoEnderecoDialogFragment extends DialogFragment implements Cadast
 
     private CadastroEnderecoPresenter presenter;
 
+    private Endereco sEndereco;
+
     private View mView;
+
+    private OnAddAdress onAddAdress;
 
     private TextInputLayout endereco, numero, complemento,
             bairro, estado, cidade;
 
-    public NovoEnderecoDialogFragment() { }
+    public NovoEnderecoDialogFragment(OnAddAdress onAddAdress) {
+
+        this.onAddAdress = onAddAdress;
+    }
 
 
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
 
-        LayoutInflater inflater = requireActivity().getLayoutInflater();
-        mView = inflater.inflate(R.layout.fragment_novo_cliente_dialog, null, false);
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+        mView = inflater.inflate(R.layout.fragment_novo_endereco_dialog, null);
 
         presenter = new CadastroEnderecoPresenter(this);
 
         estadosAutoComplete = mView.findViewById(R.id.textInputEstado);
-        adapterEstados = ArrayAdapter.createFromResource(getActivity(),
+        adapterEstados = ArrayAdapter.createFromResource(getContext(),
                 R.array.estados_brasil, android.R.layout.simple_spinner_dropdown_item);
         estadosAutoComplete.setAdapter(adapterEstados);
-        adapterCidades = new ArrayAdapter<>(getActivity(), R.layout.support_simple_spinner_dropdown_item, cidades);
+        adapterCidades = new ArrayAdapter<>(getContext(), R.layout.support_simple_spinner_dropdown_item, cidades);
         cidadesAutoComplete = mView.findViewById(R.id.textInputCidade);
         cidadesAutoComplete.setAdapter(adapterCidades);
 
@@ -104,9 +110,7 @@ public class NovoEnderecoDialogFragment extends DialogFragment implements Cadast
             }
         });
 
-
-
-        return super.onCreateDialog(savedInstanceState);
+        return createDialog();
 
     }
 
@@ -126,6 +130,17 @@ public class NovoEnderecoDialogFragment extends DialogFragment implements Cadast
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
+                sEndereco = new Endereco();
+                sEndereco.setEndereco(endereco.getEditText().getText().toString());
+                sEndereco.setNumero(endereco.getEditText().getText().toString());
+                sEndereco.setComplemento(complemento.getEditText().getText().toString());
+                sEndereco.setBairro(bairro.getEditText().getText().toString());
+                sEndereco.setEstado(estado.getEditText().getText().toString());
+                sEndereco.setNomeMunicipio(((Municipio) cidadesAutoComplete.getTag()).getNome());
+                sEndereco.setCodMunicipio(((Municipio) cidadesAutoComplete.getTag()).getCogigo());
+
+                onAddAdress.addAddress(sEndereco);
+
             }
         });
 
@@ -137,7 +152,6 @@ public class NovoEnderecoDialogFragment extends DialogFragment implements Cadast
                 alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(true);
             }
         });
-
 
         return alertDialog;
     }
@@ -176,12 +190,15 @@ public class NovoEnderecoDialogFragment extends DialogFragment implements Cadast
                 textInputLayout.setError("Campo obrigatório");
                 return false;
             }else if (textInputLayout.getError()!= null){
-
                 textInputLayout.setError(null);
             }
         }
         return true;
     }
 
+    public interface OnAddAdress{
+
+        void addAddress(Endereco endereco);
+    }
 
 }
