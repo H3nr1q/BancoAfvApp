@@ -26,6 +26,7 @@ import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.example.bancoafvapp.R;
+import com.example.bancoafvapp.activity.CadastroClienteActivity;
 import com.example.bancoafvapp.adapter.EnderecosAdapter;
 import com.example.bancoafvapp.app.BancoAfvApp;
 import com.example.bancoafvapp.model.Cliente;
@@ -56,6 +57,8 @@ public class CadastroEnderecoFragment extends CadastroClienteFragment implements
     private FloatingActionButton floatingActionButton;
 
     private OnActionEnderecoListener onActionEnderecoListener;
+
+    private String clienteCode;
 
     public CadastroEnderecoFragment() {}
 
@@ -88,6 +91,7 @@ public class CadastroEnderecoFragment extends CadastroClienteFragment implements
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
+        clienteCode = getCliente().getCodigoCliente();
         if (getCliente().getEnderecos()!=null && !getCliente().getEnderecos().isEmpty()){
             enderecos = getCliente().getEnderecos();
             enderecosAdapter = new EnderecosAdapter(enderecos);
@@ -125,11 +129,18 @@ public class CadastroEnderecoFragment extends CadastroClienteFragment implements
     }
     @Override
     public boolean isValid() {
-        return false;
+
+        if (enderecos.size() <= 0){
+            Toast.makeText(getContext(), "Adicione pelo menos um endereço", Toast.LENGTH_LONG).show();
+            return false;
+        }
+
+        return true;
     }
 
     @Override
     public void addAddress(Endereco endereco) {
+        endereco.setEndereco(clienteCode);
         enderecos.add(endereco);
         getCliente().setEnderecos(enderecos);
         enderecosAdapter.setEnderecos(enderecos);

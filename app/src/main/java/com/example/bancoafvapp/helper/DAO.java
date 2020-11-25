@@ -21,6 +21,7 @@ public abstract class DAO<Param> {
 
     public abstract List<Param> selectAll();
 
+    public abstract boolean saveOrEdit(Param object);
 
     protected abstract ContentValues bindValues(Param param);
     protected abstract Param bind(Cursor c);

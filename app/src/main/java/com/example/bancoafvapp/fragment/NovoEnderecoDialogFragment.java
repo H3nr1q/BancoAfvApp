@@ -149,6 +149,7 @@ public class NovoEnderecoDialogFragment extends DialogFragment implements Cadast
         alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
             @Override
             public void onShow(DialogInterface dialog) {
+
                 alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(true);
             }
         });
@@ -168,19 +169,14 @@ public class NovoEnderecoDialogFragment extends DialogFragment implements Cadast
         cidadesAutoComplete.setAdapter(adapterCidades);
     }
 
+/*
     public boolean isValid() {
 
-        boolean isValid =true;
-
-        isValid = validateEditText(endereco);
-        isValid = validateEditText(numero);
-        //isValid = validateEditText(complemento);
-        isValid = validateEditText(bairro);
-        isValid = validateEditText(estado);
-        isValid = validateEditText(cidade);
+        boolean isValid = true;
 
         return isValid;
     }
+*/
 
     private boolean validateEditText(TextInputLayout textInputLayout){
 
@@ -195,7 +191,6 @@ public class NovoEnderecoDialogFragment extends DialogFragment implements Cadast
         }
         return true;
     }
-
     public interface OnAddAdress{
 
         void addAddress(Endereco endereco);

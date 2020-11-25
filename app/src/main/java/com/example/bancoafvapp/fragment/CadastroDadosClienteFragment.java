@@ -67,23 +67,6 @@ public class CadastroDadosClienteFragment extends CadastroClienteFragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
-        if (savedInstanceState != null){
-
-            if (StringUtils.isNullOrEmpty(savePessoa)){
-                savedInstanceState.getString("savePessoa", savePessoa);
-            }
-
-/*            if (StringUtils.isNullOrEmpty(sRazaoSocial)){
-                savedInstanceState.getString("sRazaoSocial", sRazaoSocial);
-                razaoSocial.getEditText().setText(sRazaoSocial);
-            }
-            if (StringUtils.isNullOrEmpty(sNomeFantasia)){
-                savedInstanceState.getString("sNomeFantasia", sNomeFantasia);
-                nomeFantasia.getEditText().setText(sNomeFantasia);
-            }*/
-        }
-        //savedInstanceState.getString("razaoSocial", sRazaoSocial);
-        //savedInstanceState.getString("nomeFantasia", sNomeFantasia);
     }
 
     @Override
@@ -92,9 +75,6 @@ public class CadastroDadosClienteFragment extends CadastroClienteFragment {
 
         View view = inflater.inflate(R.layout.fragment_cadastro_dados_cliente, container, false);
 
-        //autoCompleteTextView = view.findViewById(R.id.tipoPessoaAutoCompleteTextView);
-        //conPessoaFisica = view.findViewById(R.id.dadosPessoaFisica);
-        //conPessoaJuridica = view.findViewById(R.id.dadosPessoaJuridica);
         razaoSocial = view.findViewById(R.id.textLayoutFieldRazaoSocial);
 
         nomeFantasia = view.findViewById(R.id.textLayoutFieldNomeFantasia);
@@ -128,13 +108,6 @@ public class CadastroDadosClienteFragment extends CadastroClienteFragment {
         return view;
     }
 
-    @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putString("savePessoa", savePessoa);
-        outState.putString("razaoSocial", sRazaoSocial);
-        outState.putString("nomeFantasia", sNomeFantasia);
-    }
 
     @Override
     public boolean isValid() {

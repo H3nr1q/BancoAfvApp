@@ -2,6 +2,8 @@ package com.example.bancoafvapp.helper;
 
 import android.content.ContentValues;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.example.bancoafvapp.model.Cliente;
 
@@ -44,6 +46,20 @@ public class ClienteDAO extends DAO<Cliente>{
         }
 
         return clienteList;
+    }
+
+    @Override
+    public boolean saveOrEdit(Cliente cliente) {
+
+        try {
+            getWritableDB().insertWithOnConflict(TABLE, null, bindValues(cliente), SQLiteDatabase.CONFLICT_REPLACE);
+
+        }catch (Exception e){
+
+            Log.i("INFO", "Erro ao salvar o cliente" + e.getMessage());
+            return false;
+        }
+        return true;
     }
 
     @Override

@@ -1,12 +1,14 @@
 package com.example.bancoafvapp.activity;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,8 +20,14 @@ import com.example.bancoafvapp.app.BancoAfvApp;
 import com.example.bancoafvapp.fragment.CadastroClienteFragment;
 import com.example.bancoafvapp.fragment.ICadastroCliente;
 import com.example.bancoafvapp.model.Cliente;
+import com.example.bancoafvapp.model.Endereco;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 public class CadastroClienteActivity extends AppCompatActivity implements ICadastroCliente {
 
@@ -30,14 +38,27 @@ public class CadastroClienteActivity extends AppCompatActivity implements ICadas
     private ViewPager viewPager;
     private Cliente cliente;
     private FloatingActionButton floatingActionButton;
+
+    private CadastroClientePresenter cadastroClientePresenter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro_cliente);
-        cliente = new Cliente();
+
+        if (savedInstanceState!=null){
+            cliente = savedInstanceState.getParcelable("cliente");
+            if (cliente == null) cliente = new Cliente();
+        }else {
+            cliente = new Cliente();
+            DateFormat df = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+            String code = df.format(new Date().getTime());
+
+            cliente.setCodigoCliente(code);
+        }
+        cadastroClientePresenter = new CadastroClientePresenter();
         bindViews();
     }
-
     private void bindViews(){
         toolbar = findViewById(R.id.cadastroClienteToolbar);
         toolbar.setTitle("Adicionar Cliente");
@@ -85,6 +106,16 @@ public class CadastroClienteActivity extends AppCompatActivity implements ICadas
     }
 
     @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        if (cliente != null){
+            outState.putParcelable("cliente", cliente);
+        }
+    }
+
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
         getMenuInflater().inflate(R.menu.opcoes_menu, menu);
@@ -98,7 +129,28 @@ public class CadastroClienteActivity extends AppCompatActivity implements ICadas
         switch (item.getItemId()){
 
             case R.id.optionSalvar:
-                Toast.makeText(CadastroClienteActivity.this, cliente.getEmailPrincipal() + " " + cliente.getEmailSecundario(), Toast.LENGTH_LONG).show();
+
+
+                Toast.makeText(CadastroClienteActivity.this, cliente.getEmailPrincipal() + " " + cliente.getCodigoCliente(), Toast.LENGTH_LONG).show();
+
+                if(isClienteValido()){
+
+                    if (cliente != null) {
+                        if (cadastroClientePresenter.saveOrEditCliente(cliente)) {
+                            if (cliente.getEnderecos()!=null) {
+                                boolean response = false;
+                                for (Endereco end : cliente.getEnderecos()) {
+
+                                    response = cadastroClientePresenter.saveOrEditEndereco(end);
+                                }
+                                if (response) {
+                                    Toast.makeText(CadastroClienteActivity.this, "Cliente salvo com sucesso", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        }
+                    }
+                }
+
                 break;
 
             case android.R.id.home:
@@ -114,6 +166,8 @@ public class CadastroClienteActivity extends AppCompatActivity implements ICadas
         super.onBackPressed();
         finish();
     }
+
+
 /*
     public boolean isCurrentClienteValido(int position){
         if(position>0) {
@@ -169,7 +223,6 @@ public class CadastroClienteActivity extends AppCompatActivity implements ICadas
     public Cliente getCliente() {
         return cliente;
     }
-
 
     public Fragment getPage(int position){
         return (Fragment) clientesPagerAdapter.instantiateItem(viewPager, position);
