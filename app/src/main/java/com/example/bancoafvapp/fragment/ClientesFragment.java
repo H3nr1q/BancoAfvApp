@@ -1,5 +1,7 @@
 package com.example.bancoafvapp.fragment;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -22,7 +24,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ClientesFragment extends Fragment implements ClientesFragmentPresenter.View, View.OnClickListener {
+public class ClientesFragment extends Fragment implements ClientesFragmentPresenter.View, View.OnClickListener,
+            ClientesAdapter.OnClienteClick{
 
 
     private static final String ARG_PARAM1 = "param1";
@@ -55,7 +58,6 @@ public class ClientesFragment extends Fragment implements ClientesFragmentPresen
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
     }
 
     @Override
@@ -81,6 +83,7 @@ public class ClientesFragment extends Fragment implements ClientesFragmentPresen
         clientesAdapter = new ClientesAdapter(clienteList);
         recyclerView.setAdapter(clientesAdapter);
         floatingActionButton.setOnClickListener(this);
+        clientesAdapter.setOnClienteClick(this);
 
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -111,5 +114,42 @@ public class ClientesFragment extends Fragment implements ClientesFragmentPresen
                 dialogFragment.show(getActivity().getSupportFragmentManager(), "novoClienteDialog" );
                 break;
         }
+    }
+
+    @Override
+    public void onDeleteCliente(int position, Cliente cliente) {
+
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
+        alertDialog.setTitle("Deletar cliente");
+        alertDialog.setMessage("Você realmente quer excluir " + cliente.getRazaoSocial() + "?");
+        alertDialog.setNegativeButton("Cancelar", null);
+        alertDialog.setPositiveButton("Excluir", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                if (presenter.deletarCliente(cliente)){
+
+                    Toast.makeText(getContext(), "Cliente exluido com sucesso", Toast.LENGTH_LONG).show();
+                    clientesAdapter.removeCliente(position);
+                }else
+                    Toast.makeText(getContext(), "Não foi possivel excluir o cliente", Toast.LENGTH_LONG).show();
+            }
+        });
+        alertDialog.create();
+        alertDialog.show();
+
+    }
+
+    @Override
+    public void onEditCliente(int position, Cliente cliente) {
+        Intent intent = new Intent(getActivity(), CadastroClienteActivity.class);
+        intent.putExtra("editCliente", cliente);
+        startActivity(intent);
+
+    }
+
+    @Override
+    public void onItemClick(int position, Cliente cliente) {
+        Toast.makeText(getContext(), cliente.getCodigoCliente(), Toast.LENGTH_SHORT).show();
     }
 }

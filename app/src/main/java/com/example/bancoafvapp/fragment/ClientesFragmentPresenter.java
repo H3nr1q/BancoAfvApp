@@ -2,6 +2,7 @@ package com.example.bancoafvapp.fragment;
 
 import android.view.View;
 
+import com.example.bancoafvapp.helper.ClienteDAO;
 import com.example.bancoafvapp.model.Cliente;
 import com.example.bancoafvapp.task.LoadClientesTask;
 
@@ -23,6 +24,11 @@ public class ClientesFragmentPresenter implements LoadClientesTask.OnLoadCliente
 
         LoadClientesTask loadClientesTask = new LoadClientesTask(this);
         loadClientesTask.execute();
+    }
+
+    public boolean deletarCliente(Cliente cliente){
+
+        return ClienteDAO.getInstance().delete(cliente);
     }
 
     @Override

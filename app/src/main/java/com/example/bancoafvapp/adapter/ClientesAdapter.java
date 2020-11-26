@@ -2,9 +2,11 @@ package com.example.bancoafvapp.adapter;
 
 import android.graphics.Color;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -20,9 +22,19 @@ import java.util.List;
 public class ClientesAdapter extends RecyclerView.Adapter<ClientesAdapter.MyViewHolder> {
 
     private List<Cliente> listClientes;
+    private OnClienteClick onClienteClick;
 
     public ClientesAdapter(List<Cliente> listClientes) {
         this.listClientes = listClientes;
+    }
+
+    public void removeCliente(int position){
+
+        if (position>0){
+            listClientes.remove(position);
+            notifyItemChanged(position);
+            notifyItemRangeChanged(position, getItemCount());
+        }
     }
 
     @NonNull
@@ -45,6 +57,38 @@ public class ClientesAdapter extends RecyclerView.Adapter<ClientesAdapter.MyView
         TextDrawable drawable = TextDrawable.builder()
                 .buildRound(String.valueOf(letra).toUpperCase(), Color.GRAY);
         holder.imageCliente.setImageDrawable(drawable);
+
+        holder.buttonOptions.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                PopupMenu popupMenu = new PopupMenu(holder.itemView.getContext(), holder.buttonOptions);
+                popupMenu.inflate(R.menu.button_options);
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+
+                        switch (item.getItemId()){
+
+                            case R.id.optionEdit:
+                                onClienteClick.onEditCliente(holder.getAdapterPosition(), listClientes.get(holder.getAdapterPosition()));
+                                break;
+                            case R.id.optionDelete:
+                                onClienteClick.onDeleteCliente(holder.getAdapterPosition(), listClientes.get(holder.getAdapterPosition()));
+                        }
+
+                        return false;
+                    }
+                });
+                popupMenu.show();
+            }
+        });
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onClienteClick.onItemClick(holder.getAdapterPosition(), listClientes.get(holder.getAdapterPosition()));
+            }
+        });
     }
 
     @Override
@@ -52,6 +96,9 @@ public class ClientesAdapter extends RecyclerView.Adapter<ClientesAdapter.MyView
         return listClientes.size();
     }
 
+    public void setOnClienteClick(OnClienteClick onClienteClick) {
+        this.onClienteClick = onClienteClick;
+    }
 
     static class MyViewHolder extends RecyclerView.ViewHolder{
 
@@ -59,6 +106,7 @@ public class ClientesAdapter extends RecyclerView.Adapter<ClientesAdapter.MyView
         private TextView nome;
         private ImageView buttonOptions;
         private ImageView imageCliente;
+
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
 
@@ -76,4 +124,11 @@ public class ClientesAdapter extends RecyclerView.Adapter<ClientesAdapter.MyView
         notifyDataSetChanged();
     }
 
+    public interface OnClienteClick{
+        void onDeleteCliente(int position, Cliente cliente);
+        void onEditCliente(int position, Cliente cliente);
+        void onItemClick(int position, Cliente cliente);
+    }
+
 }
+

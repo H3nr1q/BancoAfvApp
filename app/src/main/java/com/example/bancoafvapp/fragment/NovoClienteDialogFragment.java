@@ -141,7 +141,9 @@ public class NovoClienteDialogFragment extends DialogFragment implements View.On
                 if (!StringUtils.isNullOrEmpty(cpfCnpj.getEditText().getText().toString()))
                 cpfCnpj.getEditText().getText().clear();
                 cpfCnpj.setHint("CNPJ");
+                cpfCnpj.getEditText().removeTextChangedListener(cpfCnpjTextWatcher);
                 cpfCnpjTextWatcher = MaskEditUtil.mask(cpfCnpj.getEditText(), MaskEditUtil.FORMAT_CNPJ);
+                cpfCnpj.getEditText().addTextChangedListener(cpfCnpjTextWatcher);
                 break;
 
             case R.id.radioButtonFisica:
@@ -151,7 +153,9 @@ public class NovoClienteDialogFragment extends DialogFragment implements View.On
                 if (!StringUtils.isNullOrEmpty(cpfCnpj.getEditText().getText().toString()))
                     cpfCnpj.getEditText().getText().clear();
                 cpfCnpj.setHint("CPF");
+                cpfCnpj.getEditText().removeTextChangedListener(cpfCnpjTextWatcher);
                 cpfCnpjTextWatcher = MaskEditUtil.mask(cpfCnpj.getEditText(), MaskEditUtil.FORMAT_CPF);
+                cpfCnpj.getEditText().addTextChangedListener(cpfCnpjTextWatcher);
                 break;
         }
     }

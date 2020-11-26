@@ -39,8 +39,8 @@ import com.google.android.material.textfield.TextInputLayout;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CadastroEnderecoFragment extends CadastroClienteFragment implements View.OnClickListener, NovoEnderecoDialogFragment.OnAddAdress,
-        EnderecosAdapter.OnRemoveAddressItem {
+                    public class CadastroEnderecoFragment extends CadastroClienteFragment implements View.OnClickListener, NovoEnderecoDialogFragment.OnAddAdress,
+        EnderecosAdapter.OnRemoveAddressItem, EnderecosAdapter.OnEnderecoClickListener {
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -100,6 +100,7 @@ public class CadastroEnderecoFragment extends CadastroClienteFragment implements
             getCliente().setEnderecos(enderecos);
             enderecosAdapter = new EnderecosAdapter(enderecos);
         }
+        enderecosAdapter.setOnEnderecoClickListener(this);
         recyclerView.setAdapter(enderecosAdapter);
         floatingActionButton.setOnClickListener(this);
         enderecosAdapter.setOnRemoveAddressItem(this);
@@ -122,7 +123,8 @@ public class CadastroEnderecoFragment extends CadastroClienteFragment implements
         switch (v.getId()){
 
             case R.id.fbAddMoreAddress:
-                    NovoEnderecoDialogFragment dialogFragment = new NovoEnderecoDialogFragment(this);
+                    NovoEnderecoDialogFragment dialogFragment = new NovoEnderecoDialogFragment();
+                    dialogFragment.setOnAddAdress(this);
                     dialogFragment.show(getActivity().getSupportFragmentManager(), "novoEnderecoDialog");
                     break;
         }
@@ -140,9 +142,16 @@ public class CadastroEnderecoFragment extends CadastroClienteFragment implements
 
     @Override
     public void addAddress(Endereco endereco) {
-        endereco.setEndereco(clienteCode);
+        endereco.setCodigoCliente(clienteCode);
         enderecos.add(endereco);
         getCliente().setEnderecos(enderecos);
+        enderecosAdapter.setEnderecos(enderecos);
+    }
+
+    @Override
+    public void editAddress(Endereco endereco, int position) {
+
+        enderecos.set(position, endereco);
         enderecosAdapter.setEnderecos(enderecos);
     }
 
@@ -176,5 +185,13 @@ public class CadastroEnderecoFragment extends CadastroClienteFragment implements
 
         alertDialog.create();
         alertDialog.show();
+    }
+
+    @Override
+    public void onAddressClick(int position, Endereco endereco) {
+
+        NovoEnderecoDialogFragment fragment = NovoEnderecoDialogFragment.newInstance(endereco, position);
+        fragment.setOnAddAdress(this);
+        fragment.show(getActivity().getSupportFragmentManager(), "NovoDialog");
     }
 }

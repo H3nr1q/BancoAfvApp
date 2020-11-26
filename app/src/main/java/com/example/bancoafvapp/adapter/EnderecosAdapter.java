@@ -25,6 +25,8 @@ public class EnderecosAdapter extends RecyclerView.Adapter<EnderecosAdapter.MyVi
 
     private OnRemoveAddressItem onRemoveAddressItem;
 
+    private OnEnderecoClickListener onEnderecoClickListener;
+
     //private int itemCount = 3;
 
     public EnderecosAdapter(List<Endereco> enderecos) {
@@ -84,6 +86,14 @@ public class EnderecosAdapter extends RecyclerView.Adapter<EnderecosAdapter.MyVi
 
            TouchView.extend(removeButton, 50);
 
+           itemView.setOnClickListener(new View.OnClickListener() {
+               @Override
+               public void onClick(View v) {
+
+                   onEnderecoClickListener.onAddressClick(getAdapterPosition(), enderecos.get(getAdapterPosition()));
+               }
+           });
+
            removeButton.setOnClickListener(new View.OnClickListener() {
                @Override
                public void onClick(View v) {
@@ -108,6 +118,15 @@ public class EnderecosAdapter extends RecyclerView.Adapter<EnderecosAdapter.MyVi
     public void setOnRemoveAddressItem(OnRemoveAddressItem onRemoveAddressItem){
 
         this.onRemoveAddressItem = onRemoveAddressItem;
+    }
+
+    public interface OnEnderecoClickListener{
+
+        void onAddressClick(int position, Endereco endereco);
+    }
+    public void setOnEnderecoClickListener(OnEnderecoClickListener onEnderecoClickListener){
+
+        this.onEnderecoClickListener = onEnderecoClickListener;
     }
 
 }

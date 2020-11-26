@@ -49,7 +49,13 @@ public class CadastroClienteActivity extends AppCompatActivity implements ICadas
         if (savedInstanceState!=null){
             cliente = savedInstanceState.getParcelable("cliente");
             if (cliente == null) cliente = new Cliente();
-        }else {
+        }
+        else if (getIntent()!= null ){
+            if (getIntent().getExtras() != null){
+                cliente = getIntent().getParcelableExtra("editCliente");
+            }
+        }
+        else {
             cliente = new Cliente();
             DateFormat df = new SimpleDateFormat("yyyyMMddHHmmssSSS");
             String code = df.format(new Date().getTime());
@@ -145,6 +151,7 @@ public class CadastroClienteActivity extends AppCompatActivity implements ICadas
                                 }
                                 if (response) {
                                     Toast.makeText(CadastroClienteActivity.this, "Cliente salvo com sucesso", Toast.LENGTH_SHORT).show();
+                                    finish();
                                 }
                             }
                         }

@@ -13,6 +13,7 @@ import java.util.List;
 public class ClienteDAO extends DAO<Cliente>{
 
     private static final String TABLE = "GUA_CLIENTES";
+    private static final String TABLE_ENDERECOS = "GUA_ENDERECOSADICIONAIS";
     private static final String KEY_CGCCPF = "CLI_CGCCPF";
     private static final String KEY_CODIGOCLIENTE = "CLI_CODIGOCLIENTE";
     private static final String KEY_RAZAOSOCIAL = "CLI_RAZAOSOCIAL";
@@ -59,6 +60,23 @@ public class ClienteDAO extends DAO<Cliente>{
             Log.i("INFO", "Erro ao salvar o cliente" + e.getMessage());
             return false;
         }
+        return true;
+    }
+
+    @Override
+    public boolean delete(Cliente cliente) {
+
+        String[] args = {cliente.getCodigoCliente()};
+
+        try {
+            getWritableDB().delete(TABLE, "CLI_CODIGOCLIENTE LIKE ?", args );
+            getWritableDB().delete(TABLE_ENDERECOS, "EAD_CODIGOCLIENTE LIKE ?", args);
+            Log.i("INFO", "Sucesso ao deletar o cliente.");
+        }catch (Exception e){
+            Log.i("INFO", "Erro ao deletar o cliente" + e.getMessage());
+            return false;
+        }
+
         return true;
     }
 

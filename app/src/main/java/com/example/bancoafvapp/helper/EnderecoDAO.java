@@ -103,7 +103,7 @@ public class EnderecoDAO extends EndDAO<Municipio> {
 
         Endereco endereco = new Endereco();
         endereco.setCodigoCliente(getString(c, KEY_END_CODIGOCLIENTE));
-        endereco.setCodMunicipio(getString(c, KEY_CODMUNICIPIO));
+        endereco.setCodMunicipio(getString(c, KEY_END_CODIGOMUNICIPIO));
         endereco.setEndereco(getString(c, KEY_END_ENDERECO));
         endereco.setComplemento(getString(c, KEY_END_COMPLEMENTO));
         endereco.setNumero(getString(c, KEY_END_NUMERO));

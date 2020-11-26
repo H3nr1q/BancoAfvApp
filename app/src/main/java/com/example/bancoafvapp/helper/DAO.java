@@ -23,6 +23,8 @@ public abstract class DAO<Param> {
 
     public abstract boolean saveOrEdit(Param object);
 
+    public abstract boolean delete(Param cliente);
+
     protected abstract ContentValues bindValues(Param param);
     protected abstract Param bind(Cursor c);
 

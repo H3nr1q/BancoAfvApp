@@ -91,17 +91,25 @@ public class CadastroDadosClienteFragment extends CadastroClienteFragment {
 
 
         if (getActivity() != null){
-            getCliente().setCpfCnpj(getActivity().getIntent().getStringExtra("cpfcnpj"));
-            String tipo = getActivity().getIntent().getStringExtra("tipoPessoa");
 
-            switch (tipo){
-                case "fisica":
-                    nomeFantasia.setVisibility(View.GONE);
-                    break;
+            if (getActivity().getIntent().getStringExtra("cpfcnpj") != null) {
 
-                case "juridica":
+                getCliente().setCpfCnpj(getActivity().getIntent().getStringExtra("cpfcnpj"));
+                String tipo = getActivity().getIntent().getStringExtra("tipoPessoa");
+
+                switch (tipo) {
+                    case "fisica":
+                        nomeFantasia.setVisibility(View.GONE);
+                        break;
+
+                    case "juridica":
+                        nomeFantasia.setVisibility(View.VISIBLE);
+                        break;
+                }
+            }else {
+                if (getCliente().getNomeFantasia() != null){
                     nomeFantasia.setVisibility(View.VISIBLE);
-                    break;
+                }
             }
         }
 
