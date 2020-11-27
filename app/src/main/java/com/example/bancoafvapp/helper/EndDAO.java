@@ -22,6 +22,7 @@ public abstract class EndDAO<Param> {
 
     public abstract List<Param> selectCitiesByState(String estado);
     public abstract List<String> selectCitiesByName(String cidade);
+    public abstract String selectCityNameByCode(String code);
 
     protected abstract ContentValues bindValues(Param param);
     protected abstract Param bind(Cursor c);

@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.example.bancoafvapp.R;
 import com.example.bancoafvapp.activity.CadastroClienteActivity;
+import com.example.bancoafvapp.activity.DadosClienteActivity;
 import com.example.bancoafvapp.adapter.ClientesAdapter;
 import com.example.bancoafvapp.model.Cliente;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -150,6 +151,9 @@ public class ClientesFragment extends Fragment implements ClientesFragmentPresen
 
     @Override
     public void onItemClick(int position, Cliente cliente) {
-        Toast.makeText(getContext(), cliente.getCodigoCliente(), Toast.LENGTH_SHORT).show();
+
+        Intent intent = new Intent(getActivity(), DadosClienteActivity.class);
+        intent.putExtra("cliente", cliente);
+        startActivity(intent);
     }
 }

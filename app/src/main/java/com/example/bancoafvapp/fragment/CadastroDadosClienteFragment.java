@@ -80,35 +80,39 @@ public class CadastroDadosClienteFragment extends CadastroClienteFragment {
         nomeFantasia = view.findViewById(R.id.textLayoutFieldNomeFantasia);
 
 
-        if (getCliente().getRazaoSocial() != null){
-            Objects.requireNonNull(razaoSocial.getEditText()).setText(getCliente().getRazaoSocial());
+        if (getCliente() != null) {
+            if (getCliente().getRazaoSocial() != null) {
+                Objects.requireNonNull(razaoSocial.getEditText()).setText(getCliente().getRazaoSocial());
+            }
+            if (getCliente().getNomeFantasia() != null) {
+                Objects.requireNonNull(nomeFantasia.getEditText()).setText(getCliente().getNomeFantasia());
+            }
+            razaoSocial.getEditText().setText(getCliente().getRazaoSocial());
+            nomeFantasia.getEditText().setText(getCliente().getNomeFantasia());
         }
-        if (getCliente().getNomeFantasia() != null){
-            Objects.requireNonNull(nomeFantasia.getEditText()).setText(getCliente().getNomeFantasia());
-        }
-        razaoSocial.getEditText().setText(getCliente().getRazaoSocial());
-        nomeFantasia.getEditText().setText(getCliente().getNomeFantasia());
-
 
         if (getActivity() != null){
+            if (getCliente() != null) {
+                if (getActivity().getIntent().getStringExtra("cpfcnpj") != null) {
 
-            if (getActivity().getIntent().getStringExtra("cpfcnpj") != null) {
+                    getCliente().setCpfCnpj(getActivity().getIntent().getStringExtra("cpfcnpj"));
+                    String tipo = getActivity().getIntent().getStringExtra("tipoPessoa");
 
-                getCliente().setCpfCnpj(getActivity().getIntent().getStringExtra("cpfcnpj"));
-                String tipo = getActivity().getIntent().getStringExtra("tipoPessoa");
+                    switch (tipo) {
+                        case "fisica":
+                            nomeFantasia.setVisibility(View.GONE);
+                            break;
 
-                switch (tipo) {
-                    case "fisica":
-                        nomeFantasia.setVisibility(View.GONE);
-                        break;
-
-                    case "juridica":
-                        nomeFantasia.setVisibility(View.VISIBLE);
-                        break;
-                }
-            }else {
-                if (getCliente().getNomeFantasia() != null){
-                    nomeFantasia.setVisibility(View.VISIBLE);
+                        case "juridica":
+                            nomeFantasia.setVisibility(View.VISIBLE);
+                            break;
+                    }
+                } else {
+                    if (getCliente().getNomeFantasia() != null) {
+                        if (!getCliente().getNomeFantasia().isEmpty()) {
+                            nomeFantasia.setVisibility(View.VISIBLE);
+                        }
+                    }
                 }
             }
         }
@@ -129,8 +133,10 @@ public class CadastroDadosClienteFragment extends CadastroClienteFragment {
             }else if(razaoSocial.getError()!=null){
                 razaoSocial.setError(null);
             }
-            getCliente().setRazaoSocial(razaoSocial.getEditText().getText().toString());
-            sRazaoSocial = razaoSocial.getEditText().getText().toString();
+            if (getCliente()!=null) {
+                getCliente().setRazaoSocial(razaoSocial.getEditText().getText().toString());
+                sRazaoSocial = razaoSocial.getEditText().getText().toString();
+            }
         }
 
         if(nomeFantasia!=null && nomeFantasia.getVisibility() == View.VISIBLE){
@@ -140,8 +146,10 @@ public class CadastroDadosClienteFragment extends CadastroClienteFragment {
             }else if (nomeFantasia.getError()!=null){
                 nomeFantasia.setError(null);
             }
-            getCliente().setNomeFantasia(nomeFantasia.getEditText().getText().toString());
-            sNomeFantasia = nomeFantasia.getEditText().getText().toString();
+            if (getCliente()!=null) {
+                getCliente().setNomeFantasia(nomeFantasia.getEditText().getText().toString());
+                sNomeFantasia = nomeFantasia.getEditText().getText().toString();
+            }
         }
         return isValid;
     }

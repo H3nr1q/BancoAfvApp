@@ -89,11 +89,13 @@ public class CadastroTelefoneFragment extends CadastroClienteFragment{
         telefonePrincipal.getEditText().addTextChangedListener(telefone1Mask);
         telefoneSecundario.getEditText().addTextChangedListener(telefone2Mask);
 
-        if (getCliente().getRazaoSocial() != null){
-            Objects.requireNonNull(telefonePrincipal.getEditText()).setText(getCliente().getRazaoSocial());
-        }
-        if (getCliente().getNomeFantasia() != null){
-            Objects.requireNonNull(telefoneSecundario.getEditText()).setText(getCliente().getNomeFantasia());
+        if (getCliente()!=null) {
+            if (getCliente().getRazaoSocial() != null) {
+                Objects.requireNonNull(telefonePrincipal.getEditText()).setText(getCliente().getRazaoSocial());
+            }
+            if (getCliente().getNomeFantasia() != null) {
+                Objects.requireNonNull(telefoneSecundario.getEditText()).setText(getCliente().getNomeFantasia());
+            }
         }
 
         //phoneNumberValidator = new PhoneNumberValidator(telefonePrincipal);
@@ -132,6 +134,7 @@ public class CadastroTelefoneFragment extends CadastroClienteFragment{
             }else if(telefonePrincipal.getError()!=null){
                 telefonePrincipal.setError(null);
             }
+            if (getCliente()!=null)
             getCliente().setTelefone1(telefonePrincipal.getEditText().getText().toString());
         }
 
@@ -142,6 +145,7 @@ public class CadastroTelefoneFragment extends CadastroClienteFragment{
             }else if(telefoneSecundario.getError()!=null){
                 telefoneSecundario.setError(null);
             }
+            if (getCliente()!=null)
             getCliente().setTelefone2(telefoneSecundario.getEditText().getText().toString());
         }
 

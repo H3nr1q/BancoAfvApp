@@ -10,7 +10,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.BancoAfvApp">
-        <activity android:name=".activity.CadastroClienteActivity"></activity>
+        <activity android:name=".activity.DadosClienteActivity"></activity>
+        <activity android:name=".activity.CadastroClienteActivity" />
         <activity android:name=".activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

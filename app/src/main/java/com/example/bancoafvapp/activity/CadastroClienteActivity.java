@@ -46,17 +46,21 @@ public class CadastroClienteActivity extends AppCompatActivity implements ICadas
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro_cliente);
 
+        cliente = new Cliente();
+
         if (savedInstanceState!=null){
+            if (savedInstanceState.getParcelable("cliente") != null)
             cliente = savedInstanceState.getParcelable("cliente");
             if (cliente == null) cliente = new Cliente();
         }
         else if (getIntent()!= null ){
             if (getIntent().getExtras() != null){
+
+                if (getIntent().getParcelableExtra("editCliente") != null)
                 cliente = getIntent().getParcelableExtra("editCliente");
             }
         }
         else {
-            cliente = new Cliente();
             DateFormat df = new SimpleDateFormat("yyyyMMddHHmmssSSS");
             String code = df.format(new Date().getTime());
 
@@ -135,10 +139,10 @@ public class CadastroClienteActivity extends AppCompatActivity implements ICadas
         switch (item.getItemId()){
 
             case R.id.optionSalvar:
-
-
-                Toast.makeText(CadastroClienteActivity.this, cliente.getEmailPrincipal() + " " + cliente.getCodigoCliente(), Toast.LENGTH_LONG).show();
-
+                Toast.makeText(CadastroClienteActivity.this, cliente.getCodigoCliente(), Toast.LENGTH_LONG).show();
+                //if (cliente!=null)
+                //Toast.makeText(CadastroClienteActivity.this, cliente.getEmailPrincipal() + " " + cliente.getCodigoCliente(), Toast.LENGTH_LONG).show();
+                //Toast.makeText(CadastroClienteActivity.this, "Teste", Toast.LENGTH_LONG).show();
                 if(isClienteValido()){
 
                     if (cliente != null) {

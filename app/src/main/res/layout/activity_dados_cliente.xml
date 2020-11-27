@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.DadosClienteActivity">
+
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:liftOnScroll="true">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/dadosClienteToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            style="@style/Widget.MaterialComponents.Toolbar.Primary"
+            />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
+
+        <TextView
+            android:id="@+id/nomeFansatiaDadosCliente"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nome Fantasia"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+
+        <TextView
+            android:id="@+id/razaoSocialDadosCliente"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Razão Social"
+            android:textStyle="bold"
+            android:textSize="15sp"
+            app:layout_constraintTop_toBottomOf="@+id/nomeFansatiaDadosCliente"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <androidx.cardview.widget.CardView
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@+id/razaoSocialDadosCliente"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="16dp">
+
+
+                <ImageView
+
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/telefone1DadosCliente"
+                    app:layout_constraintBottom_bo="@id/telefone1DadosClientetext"
+                    android:id="@+id/imageViewPhone"
+                    android:src="@drawable/ic_phone_call"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    />
+
+                <TextView
+                    app:layout_constraintTop_toTopOf="@id/imageViewPhone"
+                    app:layout_constraintStart_toEndOf="@id/imageViewPhone"
+                    android:layout_marginLeft="16dp"
+                    android:id="@+id/telefone1DadosCliente"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Telefone1"/>
+
+                <TextView
+                    app:layout_constraintTop_toBottomOf="@+id/telefone1DadosCliente"
+                    app:layout_constraintStart_toEndOf="@id/imageViewPhone"
+                    android:layout_marginLeft="16dp"
+                    android:id="@+id/telefone1DadosClientetext"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Telefone principal"
+                    android:textStyle="bold"
+                    android:textSize="12dp"
+                    />
+
+
+                <TextView
+                    app:layout_constraintTop_toBottomOf="@id/telefone1DadosClientetext"
+                    app:layout_constraintStart_toEndOf="@id/imageViewPhone"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="16dp"
+                    android:id="@+id/telefone2DadosCliente"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Telefone2"/>
+
+                <TextView
+                    app:layout_constraintTop_toBottomOf="@id/telefone2DadosCliente"
+                    app:layout_constraintStart_toEndOf="@id/imageViewPhone"
+                    android:layout_marginLeft="16dp"
+                    android:id="@+id/telefone2DadosClientetext"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Telefone secundário"
+                    android:textStyle="bold"
+                    android:textSize="12dp"/>
+
+                <View
+                    app:layout_constraintTop_toBottomOf="@id/telefone2DadosClientetext"
+                    android:id="@+id/viewDivider1"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#d3d3d3"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginLeft="40dp"
+                    />
+
+                <ImageView
+
+                    app:layout_constraintTop_toBottomOf="@+id/viewDivider1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/email1DadosCliente"
+                    android:id="@+id/imageViewEmail"
+                    android:src="@drawable/ic_email"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginTop="16dp"/>
+
+                <TextView
+                    app:layout_constraintTop_toTopOf="@id/imageViewEmail"
+                    app:layout_constraintStart_toEndOf="@id/imageViewEmail"
+                    android:layout_marginLeft="16dp"
+                    android:id="@+id/email1DadosCliente"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Email1"/>
+
+                <TextView
+                    app:layout_constraintTop_toBottomOf="@+id/email1DadosCliente"
+                    app:layout_constraintStart_toEndOf="@id/imageViewEmail"
+                    android:layout_marginLeft="16dp"
+                    android:id="@+id/email1DadosClientetext"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="E-mail principal"
+                    android:textStyle="bold"
+                    android:textSize="12dp"
+                    />
+
+
+                <TextView
+                    app:layout_constraintTop_toBottomOf="@id/email1DadosClientetext"
+                    app:layout_constraintStart_toEndOf="@id/imageViewEmail"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="8dp"
+                    android:id="@+id/email2DadosCliente"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Telefone2"/>
+
+                <TextView
+                    app:layout_constraintTop_toBottomOf="@id/email2DadosCliente"
+                    app:layout_constraintStart_toEndOf="@id/imageViewEmail"
+                    android:layout_marginLeft="16dp"
+                    android:id="@+id/email2DadosClientetext"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="E-mail secundário"
+                    android:textStyle="bold"
+                    android:textSize="12dp"/>
+
+                <View
+                    app:layout_constraintTop_toBottomOf="@id/email2DadosClientetext"
+                    android:id="@+id/viewDivider2"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#d3d3d3"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginLeft="40dp"
+                    />
+
+                <!-- -->
+
+
+                <ImageView
+
+                    app:layout_constraintTop_toBottomOf="@+id/viewDivider2"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/enderecoDadosCliente"
+                    android:id="@+id/imageViewEndereco"
+                    android:src="@drawable/ic_maps_and_flags"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginTop="16dp"/>
+
+                <TextView
+                    app:layout_constraintTop_toTopOf="@id/imageViewEndereco"
+                    app:layout_constraintStart_toEndOf="@id/imageViewEndereco"
+                    android:layout_marginLeft="16dp"
+                    android:id="@+id/enderecoDadosCliente"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Endereço"/>
+
+                <TextView
+                    app:layout_constraintTop_toBottomOf="@+id/enderecoDadosCliente"
+                    app:layout_constraintStart_toEndOf="@id/imageViewEndereco"
+                    android:layout_marginLeft="16dp"
+                    android:id="@+id/enderecoDadosClientetext"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Endereço"
+                    android:textStyle="bold"
+                    android:textSize="12dp"
+                    />
+
+                <TextView
+                    app:layout_constraintTop_toBottomOf="@+id/enderecoDadosClientetext"
+                    app:layout_constraintStart_toEndOf="@id/imageViewEndereco"
+                    android:layout_marginLeft="16dp"
+                    android:id="@+id/enderecoAdicionaisDadosClientetext"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Endereços Adicionais"
+                    android:textStyle="italic"
+                    android:textSize="12dp"
+                    android:layout_marginTop="10dp"
+                    />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+        </androidx.cardview.widget.CardView>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

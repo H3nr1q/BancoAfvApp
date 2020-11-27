@@ -68,6 +68,20 @@ public class EnderecoDAO extends EndDAO<Municipio> {
     }
 
     @Override
+    public String selectCityNameByCode(String code) {
+
+        String nomeCidade;
+
+        String sql = " SELECT " + KEY_NOME + " FROM " + TABLE_MUNICIPIOS +
+                " WHERE " + KEY_CODMUNICIPIO + " LIKE ? ;";
+        Cursor c = getReadableDB().rawQuery(sql, new String[]{"%".concat(code)});
+
+        nomeCidade = c.getString(c.getColumnIndex(KEY_NOME)).trim();
+
+        return nomeCidade;
+    }
+
+    @Override
     protected ContentValues bindValues(Municipio municipio) {
         return null;
     }

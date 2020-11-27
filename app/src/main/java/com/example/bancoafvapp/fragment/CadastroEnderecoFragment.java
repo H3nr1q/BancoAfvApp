@@ -91,14 +91,17 @@ import java.util.List;
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
-        clienteCode = getCliente().getCodigoCliente();
-        if (getCliente().getEnderecos()!=null && !getCliente().getEnderecos().isEmpty()){
-            enderecos = getCliente().getEnderecos();
-            enderecosAdapter = new EnderecosAdapter(enderecos);
-            //enderecosAdapter.setEnderecos(enderecos);
-        }else {
-            getCliente().setEnderecos(enderecos);
-            enderecosAdapter = new EnderecosAdapter(enderecos);
+        enderecosAdapter = new EnderecosAdapter(enderecos);
+        if (getCliente()!=null) {
+            clienteCode = getCliente().getCodigoCliente();
+            if (getCliente().getEnderecos() != null && !getCliente().getEnderecos().isEmpty()) {
+                enderecos = getCliente().getEnderecos();
+                enderecosAdapter = new EnderecosAdapter(enderecos);
+                //enderecosAdapter.setEnderecos(enderecos);
+            } else {
+                getCliente().setEnderecos(enderecos);
+                enderecosAdapter = new EnderecosAdapter(enderecos);
+            }
         }
         enderecosAdapter.setOnEnderecoClickListener(this);
         recyclerView.setAdapter(enderecosAdapter);
@@ -144,6 +147,7 @@ import java.util.List;
     public void addAddress(Endereco endereco) {
         endereco.setCodigoCliente(clienteCode);
         enderecos.add(endereco);
+        if (getCliente()!=null)
         getCliente().setEnderecos(enderecos);
         enderecosAdapter.setEnderecos(enderecos);
     }
@@ -179,6 +183,7 @@ import java.util.List;
 
                 enderecos.remove(position);
                 enderecosAdapter.setEnderecos(enderecos);
+                if (getCliente()!=null)
                 getCliente().setEnderecos(enderecos);
             }
         });

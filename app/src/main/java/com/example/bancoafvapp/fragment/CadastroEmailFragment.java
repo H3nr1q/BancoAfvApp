@@ -56,11 +56,13 @@ public class CadastroEmailFragment extends CadastroClienteFragment{
         emailPrincipal = view.findViewById(R.id.textLayoutFieldEmailPrincipal);
         emailSecundario = view.findViewById(R.id.textLayoutFieldEmaileSecundario);
 
-        if (getCliente().getEmailPrincipal() != null){
-            Objects.requireNonNull(emailPrincipal.getEditText()).setText(getCliente().getEmailPrincipal());
-        }
-        if (getCliente().getEmailSecundario() != null){
-            Objects.requireNonNull(emailSecundario.getEditText()).setText(getCliente().getEmailSecundario());
+        if (getCliente()!=null) {
+            if (getCliente().getEmailPrincipal() != null) {
+                Objects.requireNonNull(emailPrincipal.getEditText()).setText(getCliente().getEmailPrincipal());
+            }
+            if (getCliente().getEmailSecundario() != null) {
+                Objects.requireNonNull(emailSecundario.getEditText()).setText(getCliente().getEmailSecundario());
+            }
         }
 
         return view;
@@ -82,6 +84,7 @@ public class CadastroEmailFragment extends CadastroClienteFragment{
             }else if (emailPrincipal.getError()!=null){
                 emailPrincipal.setError(null);
             }
+            if (getCliente()!=null)
             getCliente().setEmailPrincipal(emailPrincipal.getEditText().getText().toString());
         }
 
@@ -96,6 +99,7 @@ public class CadastroEmailFragment extends CadastroClienteFragment{
             }else if (emailSecundario.getError()!=null){
                 emailSecundario.setError(null);
             }
+            if (getCliente()!=null)
             getCliente().setEmailSecundario(emailSecundario.getEditText().getText().toString());
         }
         return isValid;
