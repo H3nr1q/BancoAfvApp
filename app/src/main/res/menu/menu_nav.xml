@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
 
     <group>
         <item android:id="@+id/nav_item_produto"
@@ -12,12 +14,14 @@
     </group>
 
 
-    <item android:title="Outros">
+    <item android:title="Bancos" >
         <menu>
-            <item android:id="@+id/nav_item_six"
-                android:title="Item 3" />
-            <item android:id="@+id/nav_item_seven"
-                android:title="Item 4" />
+            <item android:id="@+id/nav_item_banco1"
+                android:title="Banco 1" />
+            <item android:id="@+id/nav_item_banco2"
+                android:title="Banco 2" />
+            <item android:id="@+id/navo_item_banco3"
+                android:title="Banco 3"/>
         </menu>
     </item>
 </menu>

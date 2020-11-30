@@ -6,11 +6,16 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.SearchView;
+import androidx.core.view.MenuItemCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -18,6 +23,7 @@ import android.widget.Toast;
 import com.example.bancoafvapp.R;
 import com.example.bancoafvapp.activity.CadastroClienteActivity;
 import com.example.bancoafvapp.activity.DadosClienteActivity;
+import com.example.bancoafvapp.activity.MainActivity;
 import com.example.bancoafvapp.adapter.ClientesAdapter;
 import com.example.bancoafvapp.model.Cliente;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -26,7 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ClientesFragment extends Fragment implements ClientesFragmentPresenter.View, View.OnClickListener,
-            ClientesAdapter.OnClienteClick{
+            ClientesAdapter.OnClienteClick, SearchView.OnQueryTextListener {
 
 
     private static final String ARG_PARAM1 = "param1";
@@ -40,6 +46,7 @@ public class ClientesFragment extends Fragment implements ClientesFragmentPresen
     private ClientesAdapter clientesAdapter;
     private ClientesFragmentPresenter presenter;
     private FloatingActionButton floatingActionButton;
+    private SearchView searchView;
 
     public ClientesFragment() {}
 
@@ -65,6 +72,7 @@ public class ClientesFragment extends Fragment implements ClientesFragmentPresen
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        setHasOptionsMenu(true);
         View view = inflater.inflate(R.layout.fragment_clientes, container, false);
 
         bindView(view);
@@ -72,9 +80,23 @@ public class ClientesFragment extends Fragment implements ClientesFragmentPresen
         return view;
     }
 
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.menu, menu);
+
+        MenuItem searchViewItem = menu.findItem(R.id.clientesSearchView);
+        //SearchView searchView = new SearchView(((MainActivity) getContext()).getSupportActionBar().getThemedContext());
+        SearchView searchView = (SearchView) searchViewItem.getActionView();
+        searchView.setMaxWidth(Integer.MAX_VALUE);
+        searchView.setOnQueryTextListener(this);
+
+    }
+
     public void bindView(View view){
 
         floatingActionButton = view.findViewById(R.id.fButtonClientesFragment);
+        searchView = view.findViewById(R.id.clientesSearchView);
         presenter = new ClientesFragmentPresenter(this);
         recyclerView = view.findViewById(R.id.recyclerViewClientes);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
@@ -155,5 +177,20 @@ public class ClientesFragment extends Fragment implements ClientesFragmentPresen
         Intent intent = new Intent(getActivity(), DadosClienteActivity.class);
         intent.putExtra("cliente", cliente);
         startActivity(intent);
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+
+
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+
+        presenter.clientesQuery(newText);
+        //Toast.makeText(getContext(), "tESTE", Toast.LENGTH_LONG).show();
+        return false;
     }
 }

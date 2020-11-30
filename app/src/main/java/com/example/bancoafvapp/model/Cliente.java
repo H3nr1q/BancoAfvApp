@@ -19,6 +19,11 @@ public class Cliente implements Parcelable {
     private String telefone2;
     private String emailPrincipal;
     private String emailSecundario;
+    private String endereco;
+    private String numero;
+    private String complemento;
+    private String bairro;
+    private String codMunicipio;
     private List<Endereco> enderecos;
 
     public Cliente() {
@@ -33,6 +38,11 @@ public class Cliente implements Parcelable {
         telefone2 = in.readString();
         emailPrincipal = in.readString();
         emailSecundario = in.readString();
+        endereco = in.readString();
+        numero = in.readString();
+        complemento = in.readString();
+        bairro = in.readString();
+        codMunicipio = in.readString();
     }
 
     public static final Creator<Cliente> CREATOR = new Creator<Cliente>() {
@@ -111,6 +121,46 @@ public class Cliente implements Parcelable {
         this.emailSecundario = emailSecundario;
     }
 
+    public String getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(String endereco) {
+        this.endereco = endereco;
+    }
+
+    public String getNumero() {
+        return numero;
+    }
+
+    public void setNumero(String numero) {
+        this.numero = numero;
+    }
+
+    public String getComplemento() {
+        return complemento;
+    }
+
+    public void setComplemento(String complemento) {
+        this.complemento = complemento;
+    }
+
+    public String getBairro() {
+        return bairro;
+    }
+
+    public void setBairro(String bairro) {
+        this.bairro = bairro;
+    }
+
+    public String getCodMunicipio() {
+        return codMunicipio;
+    }
+
+    public void setCodMunicipio(String codMunicipio) {
+        this.codMunicipio = codMunicipio;
+    }
+
     public List<Endereco> getEnderecos() {
         return enderecos;
     }
@@ -134,6 +184,11 @@ public class Cliente implements Parcelable {
         dest.writeString(telefone2);
         dest.writeString(emailPrincipal);
         dest.writeString(emailSecundario);
+        dest.writeString(endereco);
+        dest.writeString(numero);
+        dest.writeString(complemento);
+        dest.writeString(bairro);
+        dest.writeString(codMunicipio);
     }
 
     @Override

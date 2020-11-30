@@ -1,5 +1,6 @@
 package com.example.bancoafvapp.fragment;
 
+import com.example.bancoafvapp.helper.EnderecoDAO;
 import com.example.bancoafvapp.model.Municipio;
 import com.example.bancoafvapp.task.LoadCidadesByStateTask;
 
@@ -17,6 +18,11 @@ public class CadastroEnderecoPresenter implements LoadCidadesByStateTask.OnloadC
 
         LoadCidadesByStateTask loadCidadesByStateTask = new LoadCidadesByStateTask(this);
         loadCidadesByStateTask.execute(estado);
+    }
+
+    public String getCityName(String code){
+
+        return EnderecoDAO.getInstance().selectCityNameByCode(code);
     }
 
     @Override

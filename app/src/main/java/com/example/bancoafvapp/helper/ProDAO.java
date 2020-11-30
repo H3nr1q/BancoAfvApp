@@ -4,6 +4,8 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.example.bancoafvapp.app.BancoAfvApp;
+
 import java.util.List;
 
 public abstract class ProDAO<Param> {
@@ -13,11 +15,11 @@ public abstract class ProDAO<Param> {
 
     public final SQLiteDatabase getWritableDB(){
 
-        return DbHelper.getInstance().getWritableDatabase();
+        return DbHelper.getInstance(DatabaseSelector.getInstance().getDbName()).getWritableDatabase();
     }
     public final SQLiteDatabase getReadableDB(){
 
-        return DbHelper.getInstance().getReadableDatabase();
+        return DbHelper.getInstance(DatabaseSelector.getInstance().getDbName()).getReadableDatabase();
     }
 
     public abstract List<Param> selectAll();

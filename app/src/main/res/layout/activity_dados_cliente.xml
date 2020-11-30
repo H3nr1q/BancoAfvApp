@@ -24,7 +24,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="16dp"
+        android:padding="8dp"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
 
@@ -67,7 +67,6 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/telefone1DadosCliente"
-                    app:layout_constraintBottom_bo="@id/telefone1DadosClientetext"
                     android:id="@+id/imageViewPhone"
                     android:src="@drawable/ic_phone_call"
                     android:layout_width="24dp"

@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bancoafvapp.R;
+import com.example.bancoafvapp.helper.EnderecoDAO;
 import com.example.bancoafvapp.model.Endereco;
 import com.example.bancoafvapp.utils.TouchView;
 import com.google.android.material.textfield.TextInputLayout;
@@ -55,7 +56,15 @@ public class EnderecosAdapter extends RecyclerView.Adapter<EnderecosAdapter.MyVi
         holder.numero.setText(enderecos.get(position).getNumero() + ", ");
         holder.complemento.setText(enderecos.get(position).getComplemento());
         holder.estado.setText(enderecos.get(position).getEstado());
-        holder.cidade.setText(enderecos.get(position).getNomeMunicipio().trim() + ", ");
+        holder.cidade.setText(enderecos.get(position).getNomeMunicipio());
+        /*   if (enderecos != null){
+            if (!enderecos.isEmpty()){
+                if (enderecos.get(position)!= null){
+                    if(enderecos.get(position).getCodMunicipio() != null)
+                    holder.cidade.setText(EnderecoDAO.getInstance().selectCityNameByCode(enderecos.get(position).getCodMunicipio()).trim()  + ", ");
+                }
+            }
+        }*/
         holder.bairro.setText(enderecos.get(position).getBairro());
 
     }

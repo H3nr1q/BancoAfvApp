@@ -4,11 +4,12 @@ import android.view.View;
 
 import com.example.bancoafvapp.helper.ClienteDAO;
 import com.example.bancoafvapp.model.Cliente;
+import com.example.bancoafvapp.task.LoadClientesByAttributes;
 import com.example.bancoafvapp.task.LoadClientesTask;
 
 import java.util.List;
 
-public class ClientesFragmentPresenter implements LoadClientesTask.OnLoadClientes {
+public class ClientesFragmentPresenter implements LoadClientesTask.OnLoadClientes, LoadClientesByAttributes.OnSelectClientesByAttributes {
 
     View mView;
 
@@ -26,6 +27,12 @@ public class ClientesFragmentPresenter implements LoadClientesTask.OnLoadCliente
         loadClientesTask.execute();
     }
 
+    public void clientesQuery(String query){
+
+        LoadClientesByAttributes loadClientesByAttributes = new LoadClientesByAttributes(this);
+        loadClientesByAttributes.execute(query);
+    }
+
     public boolean deletarCliente(Cliente cliente){
 
         return ClienteDAO.getInstance().delete(cliente);
@@ -34,6 +41,11 @@ public class ClientesFragmentPresenter implements LoadClientesTask.OnLoadCliente
     @Override
     public void onLoadClientesAdapter(List<Cliente> clientes) {
 
+        mView.refreshAdapterList(clientes);
+    }
+
+    @Override
+    public void onClientesByAttributes(List<Cliente> clientes) {
         mView.refreshAdapterList(clientes);
     }
 

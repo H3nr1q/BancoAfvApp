@@ -13,17 +13,26 @@ public class DbHelper extends SQLiteOpenHelper {
     public static int VERSION = 1;
     public static DbHelper dbHelper;
 
+    public static final String DB_1 = "/db1/bancomovel";
+    public static final String DB_2 = "/db2/bancomovel";
+    public static final String DB_3 = "/db3/bancomovel";
+
     public DbHelper(String dbPath){
         super(BancoAfvApp.getInstance(),dbPath, null, VERSION );
     }
 
-    public synchronized static DbHelper getInstance(){
+    public synchronized static DbHelper getInstance(String bdName){
         if (dbHelper == null){
             dbHelper = new DbHelper(
-                    BancoAfvApp.getInstance().getExternalFilesDir(null).getPath().concat("/db1/bancomovel"));
+                    BancoAfvApp.getInstance().getExternalFilesDir(null).getPath().concat(bdName));
         }
         return dbHelper;
     }
+    public void setNull(){
+        dbHelper = null;
+    }
+
+
 
     @Override
     public void onCreate(SQLiteDatabase db) {

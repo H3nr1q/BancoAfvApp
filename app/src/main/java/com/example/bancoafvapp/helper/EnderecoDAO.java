@@ -74,7 +74,7 @@ public class EnderecoDAO extends EndDAO<Municipio> {
 
         String sql = " SELECT " + KEY_NOME + " FROM " + TABLE_MUNICIPIOS +
                 " WHERE " + KEY_CODMUNICIPIO + " LIKE ? ;";
-        Cursor c = getReadableDB().rawQuery(sql, new String[]{"%".concat(code)});
+        Cursor c = getReadableDB().rawQuery(sql, new String[]{"%".concat(code).concat("%")});
 
         nomeCidade = c.getString(c.getColumnIndex(KEY_NOME)).trim();
 
@@ -107,7 +107,6 @@ public class EnderecoDAO extends EndDAO<Municipio> {
         contentValues.put(KEY_END_COMPLEMENTO, endereco.getComplemento());
         contentValues.put(KEY_END_BAIRRO, endereco.getBairro());
         contentValues.put(KEY_END_CODIGOMUNICIPIO, endereco.getCodMunicipio());
-
 
         return contentValues;
     }

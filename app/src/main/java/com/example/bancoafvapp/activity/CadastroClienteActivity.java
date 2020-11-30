@@ -37,7 +37,6 @@ public class CadastroClienteActivity extends AppCompatActivity implements ICadas
     private ClientesPagerAdapter clientesPagerAdapter;
     private ViewPager viewPager;
     private Cliente cliente;
-    private FloatingActionButton floatingActionButton;
 
     private CadastroClientePresenter cadastroClientePresenter;
 
@@ -51,7 +50,7 @@ public class CadastroClienteActivity extends AppCompatActivity implements ICadas
         if (savedInstanceState!=null){
             if (savedInstanceState.getParcelable("cliente") != null)
             cliente = savedInstanceState.getParcelable("cliente");
-            if (cliente == null) cliente = new Cliente();
+            //if (cliente == null) cliente = new Cliente();
         }
         else if (getIntent()!= null ){
             if (getIntent().getExtras() != null){
@@ -60,7 +59,7 @@ public class CadastroClienteActivity extends AppCompatActivity implements ICadas
                 cliente = getIntent().getParcelableExtra("editCliente");
             }
         }
-        else {
+        if (cliente.getCodigoCliente() == null){
             DateFormat df = new SimpleDateFormat("yyyyMMddHHmmssSSS");
             String code = df.format(new Date().getTime());
 
@@ -71,7 +70,7 @@ public class CadastroClienteActivity extends AppCompatActivity implements ICadas
     }
     private void bindViews(){
         toolbar = findViewById(R.id.cadastroClienteToolbar);
-        toolbar.setTitle("Adicionar Cliente");
+        toolbar.setTitle("Adicionar/Editar Cliente");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -103,15 +102,6 @@ public class CadastroClienteActivity extends AppCompatActivity implements ICadas
 
             }
         });
-
-/*
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Toast.makeText(CadastroClienteActivity.this, cliente.getEmailPrincipal() + " " + cliente.getEmailSecundario(), Toast.LENGTH_LONG).show();
-            }
-        });*/
 
     }
 
@@ -146,13 +136,26 @@ public class CadastroClienteActivity extends AppCompatActivity implements ICadas
                 if(isClienteValido()){
 
                     if (cliente != null) {
+
+                        cliente.setEndereco(cliente.getEnderecos().get(0).getEndereco());
+                        cliente.setNumero(cliente.getEnderecos().get(0).getNumero());
+                        cliente.setComplemento(cliente.getEnderecos().get(0).getComplemento());
+                        cliente.setBairro(cliente.getEnderecos().get(0).getBairro());
+                        cliente.setCodMunicipio(cliente.getEnderecos().get(0).getCodMunicipio());
+
                         if (cadastroClientePresenter.saveOrEditCliente(cliente)) {
                             if (cliente.getEnderecos()!=null) {
-                                boolean response = false;
+                                boolean response = true;
+                                if (cliente.getEnderecos().size() > 1) {
+                                    for (int i = 1; i < cliente.getEnderecos().size(); i++) {
+
+                                        response = cadastroClientePresenter.saveOrEditEndereco(cliente.getEnderecos().get(i));
+                                    }
+                                }/*
                                 for (Endereco end : cliente.getEnderecos()) {
 
                                     response = cadastroClientePresenter.saveOrEditEndereco(end);
-                                }
+                                }*/
                                 if (response) {
                                     Toast.makeText(CadastroClienteActivity.this, "Cliente salvo com sucesso", Toast.LENGTH_SHORT).show();
                                     finish();

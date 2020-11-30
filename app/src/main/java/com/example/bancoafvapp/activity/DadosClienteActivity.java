@@ -22,6 +22,8 @@ public class DadosClienteActivity extends AppCompatActivity {
 
     private TextView razaoSocial, nomeFantasia, telefone1, telefone2, email1, email2, endereco;
 
+    private DadosClientePresenter presenter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +32,7 @@ public class DadosClienteActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.dadosClienteToolbar);
         setSupportActionBar(toolbar);
         cliente = new Cliente();
+        presenter = new DadosClientePresenter();
 
         if(getSupportActionBar()!=null) {
             getSupportActionBar().setTitle("Dados Cliente");
@@ -49,6 +52,12 @@ public class DadosClienteActivity extends AppCompatActivity {
         email2 = findViewById(R.id.email2DadosCliente);
         endereco = findViewById(R.id.enderecoDadosCliente);
 
+        String cidade = "";
+
+        if (cliente.getCodMunicipio()!= null){
+            cidade = presenter.getNomeCidade(cliente.getCodigoCliente());
+        }
+
         if (cliente!=null){
             razaoSocial.setText(cliente.getRazaoSocial());
             nomeFantasia.setText(cliente.getNomeFantasia());
@@ -56,11 +65,8 @@ public class DadosClienteActivity extends AppCompatActivity {
             telefone2.setText(cliente.getTelefone2());
             email1.setText(cliente.getEmailPrincipal());
             email2.setText(cliente.getEmailSecundario());
-
-
+            endereco.setText(String.format("%s, %s, %s\n%s, %s", cliente.getEndereco(), cliente.getNumero(), cliente.getComplemento(), cliente.getBairro(), cidade));
         }
-
-
     }
 
     @Override

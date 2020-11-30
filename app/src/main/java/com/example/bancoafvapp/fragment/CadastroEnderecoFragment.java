@@ -39,8 +39,8 @@ import com.google.android.material.textfield.TextInputLayout;
 import java.util.ArrayList;
 import java.util.List;
 
-                    public class CadastroEnderecoFragment extends CadastroClienteFragment implements View.OnClickListener, NovoEnderecoDialogFragment.OnAddAdress,
-        EnderecosAdapter.OnRemoveAddressItem, EnderecosAdapter.OnEnderecoClickListener {
+public class CadastroEnderecoFragment extends CadastroClienteFragment implements View.OnClickListener, NovoEnderecoDialogFragment.OnAddAdress,
+        EnderecosAdapter.OnRemoveAddressItem, EnderecosAdapter.OnEnderecoClickListener, CadastroEnderecoPresenter.View{
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -57,6 +57,8 @@ import java.util.List;
     private FloatingActionButton floatingActionButton;
 
     private OnActionEnderecoListener onActionEnderecoListener;
+
+    private CadastroEnderecoPresenter presenter;
 
     private String clienteCode;
 
@@ -91,11 +93,38 @@ import java.util.List;
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
+        presenter = new CadastroEnderecoPresenter(this);
         enderecosAdapter = new EnderecosAdapter(enderecos);
         if (getCliente()!=null) {
+
             clienteCode = getCliente().getCodigoCliente();
+            Endereco endereco = new Endereco();
+            if (getCliente().getEndereco() != null){
+                endereco.setEndereco(getCliente().getEndereco());
+            }
+            if (getCliente().getNumero()!=null){
+                endereco.setNumero(getCliente().getNumero());
+            }
+            if (getCliente().getNumero()!=null){
+                endereco.setComplemento(getCliente().getComplemento());
+            }
+            if (getCliente().getComplemento()!=null){
+                endereco.setBairro(getCliente().getBairro());
+            }
+            if (getCliente().getCodMunicipio()!=null){
+                endereco.setCodMunicipio(getCliente().getCodMunicipio());
+                endereco.setNomeMunicipio(presenter.getCityName(endereco.getCodMunicipio()));
+            }
+            enderecos.add(endereco);
+
             if (getCliente().getEnderecos() != null && !getCliente().getEnderecos().isEmpty()) {
                 enderecos = getCliente().getEnderecos();
+
+                for (Endereco end:enderecos) {
+
+                    end.setNomeMunicipio(presenter.getCityName(end.getCodMunicipio()));
+                }
+
                 enderecosAdapter = new EnderecosAdapter(enderecos);
                 //enderecosAdapter.setEnderecos(enderecos);
             } else {
@@ -146,6 +175,7 @@ import java.util.List;
     @Override
     public void addAddress(Endereco endereco) {
         endereco.setCodigoCliente(clienteCode);
+        endereco.setNomeMunicipio(presenter.getCityName(endereco.getCodMunicipio()));
         enderecos.add(endereco);
         if (getCliente()!=null)
         getCliente().setEnderecos(enderecos);
@@ -170,6 +200,7 @@ import java.util.List;
             Toast.makeText(getActivity(), "É necessário pelo menos um endereço", Toast.LENGTH_LONG).show();
         }
     }
+
 
     private void dialogResponse(int position){
 
@@ -198,5 +229,10 @@ import java.util.List;
         NovoEnderecoDialogFragment fragment = NovoEnderecoDialogFragment.newInstance(endereco, position);
         fragment.setOnAddAdress(this);
         fragment.show(getActivity().getSupportFragmentManager(), "NovoDialog");
+    }
+
+    @Override
+    public void refreshMunicipiosList(List<Municipio> municipios) {
+
     }
 }

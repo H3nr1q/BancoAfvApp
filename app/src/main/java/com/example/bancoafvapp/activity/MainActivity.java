@@ -12,16 +12,22 @@ import android.content.Context;
 import android.os.Bundle;
 import android.util.AttributeSet;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
 import com.example.bancoafvapp.R;
+import com.example.bancoafvapp.app.BancoAfvApp;
 import com.example.bancoafvapp.fragment.ClientesFragment;
 import com.example.bancoafvapp.fragment.ProdutosFragment;
+import com.example.bancoafvapp.fragment.SelectDatabaseDialogFragment;
+import com.example.bancoafvapp.helper.DatabaseSelector;
+import com.example.bancoafvapp.helper.DbHelper;
 import com.google.android.material.navigation.NavigationView;
 
-    public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+    public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
+                                SelectDatabaseDialogFragment.OnDialogButtonClick{
 
         private Toolbar toolbar;
         private DrawerLayout drawerLayout;
@@ -33,9 +39,17 @@ import com.google.android.material.navigation.NavigationView;
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_main);
 
+            DatabaseSelector.getInstance().setDbName(DbHelper.DB_1);
+
+            SelectDatabaseDialogFragment databaseDialogFragment = new SelectDatabaseDialogFragment();
+            databaseDialogFragment.setOnDialogButtonClick(this);
+            databaseDialogFragment.show(getSupportFragmentManager(), "selectDatabase");
+            createClienteFragment();
+
             bindViews();
 
             getExternalFilesDir(null);
+
         }
 
         public void bindViews(){
@@ -53,6 +67,18 @@ import com.google.android.material.navigation.NavigationView;
 
             toggle.syncState();
         }
+/*
+
+        @Override
+        public boolean onCreateOptionsMenu(Menu menu) {
+
+            MenuInflater inflater = getMenuInflater();
+            inflater.inflate(R.menu.menu, menu);
+
+
+            return super.onCreateOptionsMenu(menu);
+        }
+*/
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -73,9 +99,26 @@ import com.google.android.material.navigation.NavigationView;
                             .commit();
                     break;
                 }
-
+                case R.id.nav_item_banco1:{
+                    DbHelper.getInstance(DatabaseSelector.getInstance().getDbName()).setNull();
+                    DatabaseSelector.getInstance().setDbName(DbHelper.DB_1);
+                    createClienteFragment();
+                    break;
+                }
+                case R.id.nav_item_banco2:{
+                    DbHelper.getInstance(DatabaseSelector.getInstance().getDbName()).setNull();
+                    DatabaseSelector.getInstance().setDbName(DbHelper.DB_2);
+                    createClienteFragment();
+                    break;
+                }
+                case R.id.navo_item_banco3:{
+                    DbHelper.getInstance(DatabaseSelector.getInstance().getDbName()).setNull();
+                    DatabaseSelector.getInstance().setDbName(DbHelper.DB_3);
+                    createClienteFragment();
+                    break;
+                }
                 default: {
-                    Toast.makeText(this, "Menu Default", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(this, "Menu Default", Toast.LENGTH_SHORT).show();
                     break;
                 }
             }
@@ -93,5 +136,18 @@ import com.google.android.material.navigation.NavigationView;
             }else {
                 super.onBackPressed();
             }
+        }
+
+        public void createClienteFragment(){
+
+            ClientesFragment clientesFragment = new ClientesFragment();
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.mainActivityFrameLayout, clientesFragment)
+                    .commit();
+        }
+
+        @Override
+        public void onButtonClick(String string) {
+            createClienteFragment();
         }
     }

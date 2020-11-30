@@ -6,6 +6,7 @@ public class BancoAfvApp extends MultiDexApplication {
 
     private static BancoAfvApp instance;
 
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -14,4 +15,6 @@ public class BancoAfvApp extends MultiDexApplication {
     public static BancoAfvApp getInstance(){
         return instance;
     }
+
+
 }
