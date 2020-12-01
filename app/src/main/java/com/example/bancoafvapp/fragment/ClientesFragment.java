@@ -6,8 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
-import androidx.core.view.MenuItemCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -23,7 +23,6 @@ import android.widget.Toast;
 import com.example.bancoafvapp.R;
 import com.example.bancoafvapp.activity.CadastroClienteActivity;
 import com.example.bancoafvapp.activity.DadosClienteActivity;
-import com.example.bancoafvapp.activity.MainActivity;
 import com.example.bancoafvapp.adapter.ClientesAdapter;
 import com.example.bancoafvapp.model.Cliente;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -31,7 +30,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ClientesFragment extends Fragment implements ClientesFragmentPresenter.View, View.OnClickListener,
+public class ClientesFragment extends Fragment implements ClientesPresenter.View, View.OnClickListener,
             ClientesAdapter.OnClienteClick, SearchView.OnQueryTextListener {
 
 
@@ -44,7 +43,7 @@ public class ClientesFragment extends Fragment implements ClientesFragmentPresen
     private RecyclerView recyclerView;
     private List<Cliente> clienteList = new ArrayList<>();
     private ClientesAdapter clientesAdapter;
-    private ClientesFragmentPresenter presenter;
+    private ClientesPresenter presenter;
     private FloatingActionButton floatingActionButton;
     private SearchView searchView;
 
@@ -81,6 +80,12 @@ public class ClientesFragment extends Fragment implements ClientesFragmentPresen
     }
 
     @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        presenter.listarClientes();
+    }
+
+    @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.menu, menu);
@@ -97,12 +102,11 @@ public class ClientesFragment extends Fragment implements ClientesFragmentPresen
 
         floatingActionButton = view.findViewById(R.id.fButtonClientesFragment);
         searchView = view.findViewById(R.id.clientesSearchView);
-        presenter = new ClientesFragmentPresenter(this);
+        presenter = new ClientesPresenter(this);
         recyclerView = view.findViewById(R.id.recyclerViewClientes);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
-        presenter.listarClientes();
         clientesAdapter = new ClientesAdapter(clienteList);
         recyclerView.setAdapter(clientesAdapter);
         floatingActionButton.setOnClickListener(this);

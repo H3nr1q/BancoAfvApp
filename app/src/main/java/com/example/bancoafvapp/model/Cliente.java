@@ -11,6 +11,11 @@ import java.util.Objects;
 
 public class Cliente implements Parcelable {
 
+    enum TipoPessoa{
+        FISICA,
+        JURIDICA
+    }
+
     private String codigoCliente;
     private String cpfCnpj;
     private String razaoSocial;

@@ -28,6 +28,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 public class CadastroClienteActivity extends AppCompatActivity implements ICadastroCliente {
 
@@ -39,6 +40,7 @@ public class CadastroClienteActivity extends AppCompatActivity implements ICadas
     private Cliente cliente;
 
     private CadastroClientePresenter cadastroClientePresenter;
+    private static final String EXTRA_CLIENTE = "extra_cliente";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,8 +50,8 @@ public class CadastroClienteActivity extends AppCompatActivity implements ICadas
         cliente = new Cliente();
 
         if (savedInstanceState!=null){
-            if (savedInstanceState.getParcelable("cliente") != null)
-            cliente = savedInstanceState.getParcelable("cliente");
+            if (savedInstanceState.getParcelable(EXTRA_CLIENTE) != null)
+            cliente = savedInstanceState.getParcelable(EXTRA_CLIENTE);
             //if (cliente == null) cliente = new Cliente();
         }
         else if (getIntent()!= null ){
@@ -60,8 +62,8 @@ public class CadastroClienteActivity extends AppCompatActivity implements ICadas
             }
         }
         if (cliente.getCodigoCliente() == null){
-            DateFormat df = new SimpleDateFormat("yyyyMMddHHmmssSSS");
-            String code = df.format(new Date().getTime());
+            DateFormat df = new SimpleDateFormat("yyyyMMddHHmmssSSS", Locale.getDefault());
+            String code = df.format(new Date());
 
             cliente.setCodigoCliente(code);
         }
@@ -110,7 +112,7 @@ public class CadastroClienteActivity extends AppCompatActivity implements ICadas
         super.onSaveInstanceState(outState);
 
         if (cliente != null){
-            outState.putParcelable("cliente", cliente);
+            outState.putParcelable(EXTRA_CLIENTE, cliente);
         }
     }
 
@@ -134,37 +136,8 @@ public class CadastroClienteActivity extends AppCompatActivity implements ICadas
                 //Toast.makeText(CadastroClienteActivity.this, cliente.getEmailPrincipal() + " " + cliente.getCodigoCliente(), Toast.LENGTH_LONG).show();
                 //Toast.makeText(CadastroClienteActivity.this, "Teste", Toast.LENGTH_LONG).show();
                 if(isClienteValido()){
-
-                    if (cliente != null) {
-
-                        cliente.setEndereco(cliente.getEnderecos().get(0).getEndereco());
-                        cliente.setNumero(cliente.getEnderecos().get(0).getNumero());
-                        cliente.setComplemento(cliente.getEnderecos().get(0).getComplemento());
-                        cliente.setBairro(cliente.getEnderecos().get(0).getBairro());
-                        cliente.setCodMunicipio(cliente.getEnderecos().get(0).getCodMunicipio());
-
-                        if (cadastroClientePresenter.saveOrEditCliente(cliente)) {
-                            if (cliente.getEnderecos()!=null) {
-                                boolean response = true;
-                                if (cliente.getEnderecos().size() > 1) {
-                                    for (int i = 1; i < cliente.getEnderecos().size(); i++) {
-
-                                        response = cadastroClientePresenter.saveOrEditEndereco(cliente.getEnderecos().get(i));
-                                    }
-                                }/*
-                                for (Endereco end : cliente.getEnderecos()) {
-
-                                    response = cadastroClientePresenter.saveOrEditEndereco(end);
-                                }*/
-                                if (response) {
-                                    Toast.makeText(CadastroClienteActivity.this, "Cliente salvo com sucesso", Toast.LENGTH_SHORT).show();
-                                    finish();
-                                }
-                            }
-                        }
-                    }
+                    salvarCliente();
                 }
-
                 break;
 
             case android.R.id.home:
@@ -173,6 +146,36 @@ public class CadastroClienteActivity extends AppCompatActivity implements ICadas
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void salvarCliente() {
+        if (cliente != null) {
+            cliente.setEndereco(cliente.getEnderecos().get(0).getEndereco());
+            cliente.setNumero(cliente.getEnderecos().get(0).getNumero());
+            cliente.setComplemento(cliente.getEnderecos().get(0).getComplemento());
+            cliente.setBairro(cliente.getEnderecos().get(0).getBairro());
+            cliente.setCodMunicipio(cliente.getEnderecos().get(0).getCodMunicipio());
+
+            if (cadastroClientePresenter.saveOrEditCliente(cliente)) {
+                if (cliente.getEnderecos()!=null) {
+                    boolean response = true;
+                    if (cliente.getEnderecos().size() > 1) {
+                        for (int i = 1; i < cliente.getEnderecos().size(); i++) {
+
+                            response = cadastroClientePresenter.saveOrEditEndereco(cliente.getEnderecos().get(i));
+                        }
+                    }/*
+                    for (Endereco end : cliente.getEnderecos()) {
+
+                        response = cadastroClientePresenter.saveOrEditEndereco(end);
+                    }*/
+                    if (response) {
+                        Toast.makeText(CadastroClienteActivity.this, "Cliente salvo com sucesso", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
+                }
+            }
+        }
     }
 
     @Override

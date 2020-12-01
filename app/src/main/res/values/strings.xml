@@ -5,6 +5,8 @@
     <string name="close_drawer">Fechar</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="campo_obrigatorio">Campo obrigatório</string>
+    <string name="digite_email_valido">Digite um email válido</string>
 
 
     <string-array name="tipo_pessoa">

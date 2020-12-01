@@ -9,7 +9,7 @@ import java.util.List;
 
 public class LoadCidadesByStateTask extends AsyncTask<String, Void, List<Municipio>> {
 
-    OnloadCitiesByState onloadCitiesByState;
+    private OnloadCitiesByState onloadCitiesByState;
 
     public LoadCidadesByStateTask(OnloadCitiesByState onloadCitiesByState) {
         this.onloadCitiesByState = onloadCitiesByState;

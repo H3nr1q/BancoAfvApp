@@ -21,7 +21,6 @@ public class ProdutosPagerAdapter extends FragmentStatePagerAdapter {
 
         String status;
         switch (position){
-            case 0: status = "N";break;
             case 1: status = "P";break;
             case 2: status = "L";break;
             case 3: status = "R";break;

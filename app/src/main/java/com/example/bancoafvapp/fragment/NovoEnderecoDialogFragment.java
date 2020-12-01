@@ -29,7 +29,7 @@ import java.util.List;
 public class NovoEnderecoDialogFragment extends DialogFragment implements CadastroEnderecoPresenter.View{
 
     private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    public static final String TAG = NovoEnderecoDialogFragment.class.getSimpleName();
 
     private String mParam1;
     private String mParam2;

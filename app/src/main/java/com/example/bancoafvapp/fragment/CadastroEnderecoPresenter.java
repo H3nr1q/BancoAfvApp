@@ -8,7 +8,7 @@ import java.util.List;
 
 public class CadastroEnderecoPresenter implements LoadCidadesByStateTask.OnloadCitiesByState {
 
-    View mView;
+    private View mView;
 
     public CadastroEnderecoPresenter(View mView) {
         this.mView = mView;

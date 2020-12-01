@@ -47,9 +47,6 @@ import com.google.android.material.navigation.NavigationView;
             createClienteFragment();
 
             bindViews();
-
-            getExternalFilesDir(null);
-
         }
 
         public void bindViews(){
@@ -100,21 +97,15 @@ import com.google.android.material.navigation.NavigationView;
                     break;
                 }
                 case R.id.nav_item_banco1:{
-                    DbHelper.getInstance(DatabaseSelector.getInstance().getDbName()).setNull();
-                    DatabaseSelector.getInstance().setDbName(DbHelper.DB_1);
-                    createClienteFragment();
+                    selectDatabse(DbHelper.DB_1);
                     break;
                 }
                 case R.id.nav_item_banco2:{
-                    DbHelper.getInstance(DatabaseSelector.getInstance().getDbName()).setNull();
-                    DatabaseSelector.getInstance().setDbName(DbHelper.DB_2);
-                    createClienteFragment();
+                    selectDatabse(DbHelper.DB_2);
                     break;
                 }
                 case R.id.navo_item_banco3:{
-                    DbHelper.getInstance(DatabaseSelector.getInstance().getDbName()).setNull();
-                    DatabaseSelector.getInstance().setDbName(DbHelper.DB_3);
-                    createClienteFragment();
+                    selectDatabse(DbHelper.DB_3);
                     break;
                 }
                 default: {
@@ -126,6 +117,12 @@ import com.google.android.material.navigation.NavigationView;
             drawerLayout.closeDrawer(GravityCompat.START);
 
             return true;
+        }
+
+        private void selectDatabse(String db) {
+            DbHelper.getInstance(DatabaseSelector.getInstance().getDbName()).setNull();
+            DatabaseSelector.getInstance().setDbName(db);
+            createClienteFragment();
         }
 
         @Override

@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.bancoafvapp.R;
 import com.example.bancoafvapp.app.BancoAfvApp;
 import com.example.bancoafvapp.model.Produto;
+import com.example.bancoafvapp.utils.FormatUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,13 +40,13 @@ public class ProdutosAdapter extends RecyclerView.Adapter<ProdutosAdapter.MyView
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
         Produto produto = produtoList.get(position);
-        String minValue = "R$ " + String.valueOf(produto.getPrecoMin());
-        String maxValue = "R$ " + String.valueOf(produto.getPrecoMax());
+
+
         holder.codigo.setText(produto.getCodigo());
         holder.descricao.setText(produto.getDescricao());
         holder.estoque.setText(String.valueOf(produto.getEstoque()));
-        holder.valorMin.setText(minValue);
-        holder.valorMax.setText(maxValue);
+        holder.valorMin.setText(FormatUtils.currency(produto.getPrecoMin()));
+        holder.valorMax.setText(FormatUtils.currency(produto.getPrecoMax()));
     }
 
     @Override

@@ -9,11 +9,11 @@ import com.example.bancoafvapp.task.LoadClientesTask;
 
 import java.util.List;
 
-public class ClientesFragmentPresenter implements LoadClientesTask.OnLoadClientes, LoadClientesByAttributes.OnSelectClientesByAttributes {
+public class ClientesPresenter implements LoadClientesTask.OnLoadClientes, LoadClientesByAttributes.OnSelectClientesByAttributes {
 
-    View mView;
+    private View mView;
 
-    public ClientesFragmentPresenter(View mView) {
+    public ClientesPresenter(View mView) {
         this.mView = mView;
     }
 

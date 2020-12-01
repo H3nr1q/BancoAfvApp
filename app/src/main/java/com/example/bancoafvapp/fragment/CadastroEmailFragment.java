@@ -60,8 +60,8 @@ public class CadastroEmailFragment extends CadastroClienteFragment{
             if (getCliente().getEmailPrincipal() != null) {
                 Objects.requireNonNull(emailPrincipal.getEditText()).setText(getCliente().getEmailPrincipal());
             }
-            if (getCliente().getEmailSecundario() != null) {
-                Objects.requireNonNull(emailSecundario.getEditText()).setText(getCliente().getEmailSecundario());
+            if (emailSecundario.getEditText()!=null && getCliente().getEmailSecundario() != null) {
+                emailSecundario.getEditText().setText(getCliente().getEmailSecundario());
             }
         }
 
@@ -71,38 +71,36 @@ public class CadastroEmailFragment extends CadastroClienteFragment{
     @Override
     public boolean isValid() {
 
-        boolean isValid = true;
+        boolean isValid = isEmailValido(emailPrincipal);
+        isValid &= isEmailValido(emailSecundario);
 
-        if (emailPrincipal!= null ){
-
-            if (StringUtils.isNullOrEmpty(emailPrincipal.getEditText().getText().toString())){
-                emailPrincipal.setError("Campo obrigatório");
-                isValid = false;
-            }else if (!emailPrincipal.getEditText().getText().toString().matches(Validate.EMAIL_REGEX)){
-                isValid = false;
-                emailPrincipal.setError("Digite um email válido");
-            }else if (emailPrincipal.getError()!=null){
-                emailPrincipal.setError(null);
-            }
-            if (getCliente()!=null)
+        if (isValid && getCliente()!=null) {
             getCliente().setEmailPrincipal(emailPrincipal.getEditText().getText().toString());
-        }
-
-        if (emailSecundario!= null){
-
-            if (StringUtils.isNullOrEmpty(emailSecundario.getEditText().getText().toString())){
-                emailSecundario.setError("Campo obrigatório");
-                isValid = false;
-            }else if (!emailSecundario.getEditText().getText().toString().matches(Validate.EMAIL_REGEX)){
-                isValid = false;
-                emailSecundario.setError("Digite um email válido");
-            }else if (emailSecundario.getError()!=null){
-                emailSecundario.setError(null);
-            }
-            if (getCliente()!=null)
             getCliente().setEmailSecundario(emailSecundario.getEditText().getText().toString());
         }
+
         return isValid;
+    }
+
+    private boolean isEmailValido(TextInputLayout email) {
+
+        if(email==null || email.getEditText()==null) return false;
+
+        if (StringUtils.isNullOrEmpty(email.getEditText().getText().toString())){
+            email.setError(getString(R.string.campo_obrigatorio));
+            return false;
+        }
+
+        if (!email.getEditText().getText().toString().matches(Validate.EMAIL_REGEX)){
+            email.setError(getString(R.string.digite_email_valido));
+            return false;
+        }
+
+        if (email.getError()!=null) {
+            email.setError(null);
+        }
+
+        return true;
     }
 
 }

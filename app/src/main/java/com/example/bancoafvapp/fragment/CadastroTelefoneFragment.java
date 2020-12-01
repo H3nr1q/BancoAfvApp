@@ -48,13 +48,8 @@ public class CadastroTelefoneFragment extends CadastroClienteFragment{
         // Required empty public constructor
     }
 
-    public static CadastroTelefoneFragment newInstance(String param1, String param2) {
-        CadastroTelefoneFragment fragment = new CadastroTelefoneFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+    public static CadastroTelefoneFragment newInstance() {
+        return new CadastroTelefoneFragment();
     }
 
     @Override
@@ -91,10 +86,10 @@ public class CadastroTelefoneFragment extends CadastroClienteFragment{
 
         if (getCliente()!=null) {
             if (getCliente().getRazaoSocial() != null) {
-                Objects.requireNonNull(telefonePrincipal.getEditText()).setText(getCliente().getRazaoSocial());
+                Objects.requireNonNull(telefonePrincipal.getEditText()).setText(getCliente().getTelefone1());
             }
             if (getCliente().getNomeFantasia() != null) {
-                Objects.requireNonNull(telefoneSecundario.getEditText()).setText(getCliente().getNomeFantasia());
+                Objects.requireNonNull(telefoneSecundario.getEditText()).setText(getCliente().getTelefone2());
             }
         }
 

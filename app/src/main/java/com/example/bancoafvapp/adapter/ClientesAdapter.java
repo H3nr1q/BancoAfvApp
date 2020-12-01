@@ -48,7 +48,7 @@ public class ClientesAdapter extends RecyclerView.Adapter<ClientesAdapter.MyView
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MyViewHolder holder,final  int position) {
         Cliente cliente = listClientes.get(position);
         holder.cpfCnpj.setText(cliente.getCpfCnpj());
         holder.nome.setText(cliente.getRazaoSocial());
@@ -58,35 +58,27 @@ public class ClientesAdapter extends RecyclerView.Adapter<ClientesAdapter.MyView
                 .buildRound(String.valueOf(letra).toUpperCase(), Color.GRAY);
         holder.imageCliente.setImageDrawable(drawable);
 
-        holder.buttonOptions.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        holder.buttonOptions.setOnClickListener(v -> {
+            PopupMenu popupMenu = new PopupMenu(holder.itemView.getContext(), holder.buttonOptions);
+            popupMenu.inflate(R.menu.button_options);
+            popupMenu.setOnMenuItemClickListener(item -> {
+                if(onClienteClick!=null){
+                    switch (item.getItemId()){
 
-                PopupMenu popupMenu = new PopupMenu(holder.itemView.getContext(), holder.buttonOptions);
-                popupMenu.inflate(R.menu.button_options);
-                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-
-                        switch (item.getItemId()){
-
-                            case R.id.optionEdit:
-                                onClienteClick.onEditCliente(holder.getAdapterPosition(), listClientes.get(holder.getAdapterPosition()));
-                                break;
-                            case R.id.optionDelete:
-                                onClienteClick.onDeleteCliente(holder.getAdapterPosition(), listClientes.get(holder.getAdapterPosition()));
-                        }
-
-                        return false;
+                        case R.id.optionEdit:
+                            onClienteClick.onEditCliente(position, listClientes.get(position));
+                            break;
+                        case R.id.optionDelete:
+                            onClienteClick.onDeleteCliente(position, listClientes.get(position));
                     }
-                });
-                popupMenu.show();
-            }
+                }
+                return false;
+            });
+            popupMenu.show();
         });
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onClienteClick.onItemClick(holder.getAdapterPosition(), listClientes.get(holder.getAdapterPosition()));
+        holder.itemView.setOnClickListener(v -> {
+            if(onClienteClick!=null) {
+                onClienteClick.onItemClick(position, listClientes.get(position));
             }
         });
     }

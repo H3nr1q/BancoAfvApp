@@ -58,10 +58,10 @@ public class ClienteDAO extends DAO<Cliente>{
     public List<Cliente> selectByAttributes(String query) {
 
         List<Cliente> clientes = new ArrayList<>();
-        String sql = " SELECT * FROM " + TABLE + " WHERE ? LIKE " + KEY_CGCCPF + " OR ? LIKE " + KEY_RAZAOSOCIAL +
-                " OR ? LIKE " + KEY__NOMEFANTASIA + ";";
+        String sql = " SELECT * FROM " + TABLE + " WHERE " + KEY_CGCCPF + " LIKE ? " + " OR " + KEY_RAZAOSOCIAL + " LIKE ?" +
+                " OR " + KEY__NOMEFANTASIA + " LIKE ? ;";
 
-        Cursor c = getReadableDB().rawQuery(sql, new String[]{"%".concat(query)});
+        Cursor c = getReadableDB().rawQuery(sql, new String[]{query.concat("%"), query.concat("%"), query.concat("%")});
 
         while (c.moveToNext()){
             clientes.add(bind(c));
